@@ -1,5 +1,5 @@
 function onePlusAvg(x,y){
-    return 1 + (x + y) / 2
+    return 1 + (x + y) / 2 // average sum up garney function
 }
 const sum = (p, q)=>{
     return p + q
