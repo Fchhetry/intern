@@ -14,9 +14,9 @@ function fetchData() { // function returns a promise
 
 // Using the promise
 fetchData()
-  .then((result) => {
+  .then((result) => { //runs if promise was resolved
     console.log("Success:", result);
   })
-  .catch((error) => {
+  .catch((error) => { //runs if promise was rejected
     console.error("Error:", error);
   });
