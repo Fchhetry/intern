@@ -10,7 +10,7 @@ console.log(original);      // [1, 2, [3, 4]]
 console.log(shalowCopy);   // [100, 2, [3, 4]]
 
 // Modify nested element
-shalowCopy[2][0] = 999;  // Affects both!
+shalowCopy[2][0] = 999;  // Affects both
 console.log(original);      // [1, 2, [999, 4]]
 console.log(shalowCopy);   // [100, 2, [999, 4]]
 
@@ -18,7 +18,7 @@ console.log(shalowCopy);   // [100, 2, [999, 4]]
 //for objects
 const orignal = {
   name: "Pooja",
-  address: { city: "Dehradun" }
+  address: { city: "Birtamod" }
 };
 
 // Shallow copy using spread
@@ -30,5 +30,5 @@ console.log(orignal.name);      // Pooja
 console.log(shallowCopy.name);   // Asha
 
 // Modify nested object
-shallowCopy.address.city = "Delhi";
-console.log(orignal.address.city);  // Delhi (changed!)
+shallowCopy.address.city = "Kathmandu";
+console.log(orignal.address.city);  // Kathmandu (changed!)
