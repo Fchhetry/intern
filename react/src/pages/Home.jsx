@@ -5,7 +5,7 @@ const Home = () => {
     <div>
       I am home!!
     </div>
-  )
+  );
 }
 
-export default Home
+export default Home;

@@ -5,15 +5,18 @@ import Message from '../../react/src/component/Messages';
 import Card from '../../react/src/component/Card';
 import { Greeting, Logical, IfOp, ShowHide } from '../../react/src/component/conditionalrendering';
 import IplList from './component/renderlist';
-import LoginForm from './component/eventhandling';
+import LoginForm from './component/Eventhandling';
 import ExUseEffect from '../../react/src/component/effect';
 import ExUseLayoutEffect from '../../react/src/component/layouteffect';
 import Lifecycle from './component/Lifecycle';
 import Fetch from './component/fetch';
 import Axios from './component/axios';
 import LoadNError from './component/LoadError';
+import { RouterProvider } from 'react-router-dom';
 import AppRoutes from './routes/AppRoutes';
-
+import Callback from './component/CallbacK';
+import { ThemeProvider } from './component/ThemeContext';
+import ChildComponent from './component/ChildComponent';
 
 function App() {
   const names = ['Pooja', 'Ravi', 'Anjali'];
@@ -22,8 +25,23 @@ function App() {
    
     <div style={{ padding: '20px' }}>
       <h1>Combined React App</h1>
-      
-      <AppRoutes />
+      <>
+      <RouterProvider router={AppRoutes} />
+     
+</>
+
+{/*useContext demo1*/}
+<Card>
+<ThemeProvider>
+      <h1>useContext Example</h1>
+      <ChildComponent />
+    </ThemeProvider>
+</Card>
+    {/*callback */}
+    <Card>
+      <h2>useCallback demo</h2>
+      <Callback />
+    </Card>
     
     {/*Loading and Error states */}
     <Card>
