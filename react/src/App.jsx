@@ -17,6 +17,7 @@ import AppRoutes from './routes/AppRoutes';
 import Callback from './component/CallbacK';
 import { ThemeProvider } from './component/ThemeContext';
 import ChildComponent from './component/ChildComponent';
+import RefFocusInput from './component/Ref';
 
 function App() {
   const names = ['Pooja', 'Ravi', 'Anjali'];
@@ -25,18 +26,22 @@ function App() {
    
     <div style={{ padding: '20px' }}>
       <h1>Combined React App</h1>
-      <>
+    <>
       <RouterProvider router={AppRoutes} />
      
-</>
+    </>
+    {/*useRef hook*/}
+    <Card>
+      <RefFocusInput />
+    </Card>
 
-{/*useContext demo1*/}
-<Card>
-<ThemeProvider>
+    {/*useContext demo1*/}
+    <Card>
+    <ThemeProvider>
       <h1>useContext Example</h1>
       <ChildComponent />
     </ThemeProvider>
-</Card>
+    </Card>
     {/*callback */}
     <Card>
       <h2>useCallback demo</h2>
