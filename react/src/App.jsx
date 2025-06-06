@@ -18,6 +18,7 @@ import Callback from './component/CallbacK';
 import { ThemeProvider } from './component/ThemeContext';
 import ChildComponent from './component/ChildComponent';
 import RefFocusInput from './component/Ref';
+import CounterReducer from './component/Reducer';
 
 function App() {
   const names = ['Pooja', 'Ravi', 'Anjali'];
@@ -30,6 +31,11 @@ function App() {
       <RouterProvider router={AppRoutes} />
      
     </>
+    {/*useReducer hook*/}
+    <Card>
+      <CounterReducer />
+    </Card>
+
     {/*useRef hook*/}
     <Card>
       <RefFocusInput />
