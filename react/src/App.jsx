@@ -19,6 +19,9 @@ import { ThemeProvider } from './component/ThemeContext';
 import ChildComponent from './component/ChildComponent';
 import RefFocusInput from './component/Ref';
 import CounterReducer from './component/Reducer';
+import FormWithUseId from './component/Id';
+import TodoList from './component/Todo';
+import CounterWithCalc from './component/Calc';
 
 function App() {
   const names = ['Pooja', 'Ravi', 'Anjali'];
@@ -31,6 +34,17 @@ function App() {
       <RouterProvider router={AppRoutes} />
      
     </>
+    {/*useMemo demo */}
+    <Card>
+    <TodoList />
+    <hr />
+    <CounterWithCalc />
+    </Card>
+    {/*useID hook*/}
+    <Card>
+    <FormWithUseId />
+    </Card>
+
     {/*useReducer hook*/}
     <Card>
       <CounterReducer />
