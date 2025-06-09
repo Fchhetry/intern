@@ -17,11 +17,12 @@ import AppRoutes from './routes/AppRoutes';
 import Callback from './component/CallbacK';
 import { ThemeProvider } from './component/ThemeContext';
 import ChildComponent from './component/ChildComponent';
-import RefFocusInput from './component/Ref';
 import CounterReducer from './component/Reducer';
 import FormWithUseId from './component/Id';
 import TodoList from './component/Todo';
 import CounterWithCalc from './component/Calc';
+import ParentComponent from "./component/Parent"; 
+import Stopwatch from './component/Ref';
 
 function App() {
   const names = ['Pooja', 'Ravi', 'Anjali'];
@@ -34,6 +35,13 @@ function App() {
       <RouterProvider router={AppRoutes} />
      
     </>
+    {/*useImperative Handle*/}
+    <Card>
+    <div className="App">
+      <ParentComponent />
+    </div>
+    </Card>
+
     {/*useMemo demo */}
     <Card>
     <TodoList />
@@ -52,13 +60,13 @@ function App() {
 
     {/*useRef hook*/}
     <Card>
-      <RefFocusInput />
+      <Stopwatch />
     </Card>
 
     {/*useContext demo1*/}
     <Card>
     <ThemeProvider>
-      <h1>useContext Example</h1>
+      <h2>useContext Example</h2>
       <ChildComponent />
     </ThemeProvider>
     </Card>

@@ -1,27 +1,35 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 
-function RefFocusInput() {
-    //reference to input element
-  const inputRef = useRef(null);
-    //ocus on input beig called
-  const handleFocus = () => {
-    inputRef.current.focus();//access DOM element
+function Stopwatch() {
+  const [time, setTime] = useState(0);
+  const intervalRef = useRef(null); //Store interval ID
+
+  const startTimer = () => {
+    if (intervalRef.current !== null) return; // Already running
+    intervalRef.current = setInterval(() => {
+      setTime(prevTime => prevTime + 1);
+    }, 1000);
+  };
+
+  const stopTimer = () => {
+    clearInterval(intervalRef.current);
+    intervalRef.current = null; // Reset ref
+  };
+
+  const resetTimer = () => {
+    stopTimer();
+    setTime(0);
   };
 
   return (
-    <>
-    <h2>useRef demo</h2>
-      {/*input is connected to the ref */}
-      <input
-        ref={inputRef}
-        type="text"
-        placeholder="Click the button to focus me"
-      />
-      <br /><br />
-      {/* yo button click garesi input gets focused */}
-      <button onClick={handleFocus}>Focus the input</button>
-    </>
+    <div>
+      <h2>Stopwatch (useRef)</h2>
+      <h3>{time} seconds</h3>
+      <button onClick={startTimer}>Start</button>{" "}
+      <button onClick={stopTimer}>Stop</button>{" "}
+      <button onClick={resetTimer}>Reset</button>
+    </div>
   );
 }
 
-export default RefFocusInput;
+export default Stopwatch;
