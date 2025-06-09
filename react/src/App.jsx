@@ -23,6 +23,9 @@ import TodoList from './component/Todo';
 import CounterWithCalc from './component/Calc';
 import ParentComponent from "./component/Parent"; 
 import Stopwatch from './component/Ref';
+import UserList from './component/UserList';
+import NameSaver from './component/NameSaver';
+import PreviousValueTracker from './component/PreviousValueTracker';
 
 function App() {
   const names = ['Pooja', 'Ravi', 'Anjali'];
@@ -35,6 +38,18 @@ function App() {
       <RouterProvider router={AppRoutes} />
      
     </>
+    {/*Custom Hooks Demo */}
+    <Card>
+     <h2>Custom Hooks Demo</h2>
+      <UserList />
+      <hr />
+      <NameSaver />
+      <hr />
+      <PreviousValueTracker /> 
+    </Card>
+
+
+
     {/*useImperative Handle*/}
     <Card>
     <div className="App">
