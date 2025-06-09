@@ -4,7 +4,7 @@ export default function TodoList() {
   const [todos, setTodos] = useState([]); // function to update array
 
   const addTodo = () => { //functional form to get the latest state
-    setTodos((t) => [...t, "New Todo"]); //create nre array
+    setTodos((t) => [...t, "New Todo"]); //create new array
   };
 
   return (

@@ -45,9 +45,13 @@ function App() {
     {/*useMemo demo */}
     <Card>
     <TodoList />
-    <hr />
+    </Card>
+
+    {/*useSate */}
+    <Card>
     <CounterWithCalc />
     </Card>
+
     {/*useID hook*/}
     <Card>
     <FormWithUseId />
