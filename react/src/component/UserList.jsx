@@ -1,5 +1,5 @@
 import React from 'react';
-import { useFetch } from '../hooks/useFetch';
+import { useFetch } from '../hooks/Fetch';
 
 export default function UserList() { // making function
   const { data, loading, error } = useFetch('https://jsonplaceholder.typicode.com/users'); //calling custom hook

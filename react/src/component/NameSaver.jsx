@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocalStorage } from '../hooks/useLocalStorage';
+import { useLocalStorage } from '../hooks/LocalStorage';
 
 export default function NameSaver() {
   const [name, setName] = useLocalStorage('username', ''); //localstorage bata value retrieve garney

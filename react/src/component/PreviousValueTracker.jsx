@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { usePrevious } from '../hooks/usePrevious';
+import { usePrevious } from '../hooks/Previous';
 
 export default function PreviousValueTracker() {
   const [count, setCount] = useState(0); //initialize count to 0
