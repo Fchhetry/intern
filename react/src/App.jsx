@@ -26,6 +26,7 @@ import Stopwatch from './component/Ref';
 import UserList from './component/UserList';
 import NameSaver from './component/NameSaver';
 import PreviousValueTracker from './component/PreviousValueTracker';
+//import { Add } from './counter/Counter';
 
 function App() {
   const names = ['Pooja', 'Ravi', 'Anjali'];
@@ -34,10 +35,8 @@ function App() {
    
     <div style={{ padding: '20px' }}>
       <h1>Combined React App</h1>
-    <>
-      <RouterProvider router={AppRoutes} />
-     
-    </>
+<></>
+<RouterProvider router={AppRoutes} />
     {/*Custom Hooks Demo */}
     <Card>
      <h2>Custom Hooks Demo</h2>
@@ -48,6 +47,12 @@ function App() {
       <PreviousValueTracker /> 
     </Card>
 
+    {/* REDUX
+    <Card>
+    
+     <h1>Redux Counter</h1>
+      <Add />
+    </Card>   */}
 
 
     {/*useImperative Handle*/}
