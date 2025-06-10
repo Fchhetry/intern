@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { usePrevious } from '../hooks/usePrevious';
 
 export default function PreviousValueTracker() {
-  const [count, setCount] = useState(0);
-  const prevCount = usePrevious(count);
+  const [count, setCount] = useState(0); //initialize count to 0
+  const prevCount = usePrevious(count);//returns the previous value of count
 
   return (
     <div>

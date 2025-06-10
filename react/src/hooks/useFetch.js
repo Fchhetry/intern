@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 
-export function useFetch(url) {
+export function useFetch(url) { //initial hook
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
+  useEffect(() => { // second hook but built-in
     let isMounted = true;
     const fetchData = async () => {
       setLoading(true);
