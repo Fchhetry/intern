@@ -26,13 +26,14 @@ import Stopwatch from './component/Ref';
 import UserList from './component/UserList';
 import NameSaver from './component/NameSaver';
 import PreviousValueTracker from './component/PreviousValueTracker';
-//import { Add } from './counter/Counter';
-
+import { Addition } from './counter/Addition';
+import { Provider } from 'react-redux';
+import { store } from './app/Store';
 function App() {
   const names = ['Pooja', 'Ravi', 'Anjali'];
 
   return (
-   
+   <Provider store={store}>
     <div style={{ padding: '20px' }}>
       <h1>Combined React App</h1>
 <></>
@@ -47,12 +48,11 @@ function App() {
       <PreviousValueTracker /> 
     </Card>
 
-    {/* REDUX
+    {/* REDUX */}
     <Card>
-    
-     <h1>Redux Counter</h1>
-      <Add />
-    </Card>   */}
+      <h2>Redux Addition</h2>
+      <Addition />
+    </Card>   
 
 
     {/*useImperative Handle*/}
@@ -205,6 +205,7 @@ function App() {
         </ul>
     </Card>
     </div>
+    </Provider>
   );
 }
 
