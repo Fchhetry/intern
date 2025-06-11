@@ -2,16 +2,28 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   list: [
-    { id: 1, name: 'Alice Johnson', age: 20, grade: 'A' },
-    { id: 2, name: 'Bob Smith', age: 22, grade: 'B' },
-    { id: 3, name: 'Charlie Brown', age: 21, grade: 'A+' },
-  ],
+    { id: 1, name: 'Jon Snow', email: 'jon@example.com', gender: 'Male', phone: '1234567890' },
+    { id: 2, name: 'Hridaya Sharma', email: 'hridaya@example.com', gender: 'Male', phone: '984989396' },
+    { id: 3, name: 'Jacob Smith', email: 'jacob@example.com', gender: 'Male', phone: '9876543210' },
+    { id: 4, name: 'Aarav Sharma', email: 'aarav.sharma@example.com', gender: 'Male', phone: '9123456780' },
+    { id: 5, name: 'Amahle Ndlovu', email: 'amahle.ndlovu@example.com', gender: 'Female', phone: '9823456781' },
+    { id: 6, name: 'Sita Rana', email: 'sita.rana@example.com', gender: 'Female', phone: '9841234567' },
+    { id: 7, name: 'Kabir Mehta', email: 'kabir.mehta@example.com', gender: 'Male', phone: '9898765432' },
+    { id: 8, name: 'Kwame Mensah', email: 'kwame.mensah@example.com', gender: 'Male', phone: '9812345678' },
+    { id: 9, name: 'Laxmi Gurung', email: 'laxmi.gurung@example.com', gender: 'Female', phone: '9801122334' },
+    { id: 10, name: 'Charlie Jackson', email: 'charlie@example.com', gender: 'Male', phone: '5551234567' },
+    { id: 11, name: 'Thabo Mokoena', email: 'thabo.mokoena@example.com', gender: 'Male', phone: '9876543210' },
+    { id: 12, name: 'Priya Verma', email: 'priya.verma@example.com', gender: 'Female', phone: '9911223344' },
+    { id: 13, name: 'Anish Tamang', email: 'anish.tamang@example.com', gender: 'Male', phone: '9845098765' },
+    { id: 14, name: 'Zanele Dlamini', email: 'zanele.dlamini@example.com', gender: 'Female', phone: '9723456789' },
+    { id: 15, name: 'Diana Marie', email: 'diana@example.com', gender: 'Female', phone: '2223334444' },
+  ]
 };
 
 const studentSlice = createSlice({
   name: 'students',
   initialState,
-  reducers: {},
+ 
 });
 
 export default studentSlice.reducer;

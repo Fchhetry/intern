@@ -6,3 +6,4 @@ export const store = configureStore({
     students: studentReducer,
   },
 });
+export default store;
