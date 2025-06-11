@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
+
+
 function Fetch() {
   const [data, setData] = useState([]); //data is the state variable to hold fetched posts and setData updates the data
 
@@ -12,12 +14,14 @@ function Fetch() {
 
   return (
     <div>
+    
       <h2>Posts</h2>
       <ul>
         {data.map((item) => ( //loops though every post in data
           <li key={item.id}>{item.title}</li> // uniquely identify each item in the list
         ))}
       </ul>
+      
     </div>
   );
 }
