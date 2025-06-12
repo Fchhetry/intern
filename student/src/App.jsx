@@ -4,7 +4,6 @@ import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import StudentList from './features/pages/StudentList';
-//import StudentTable from './features/feature1/components/Component1/StudentTable';
 import store from './store/store';
 
 const theme = createTheme({
@@ -24,8 +23,8 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <BrowserRouter>
-          <StudentList />
-          {/*StudentTable / */}
+         <StudentList />
+         
         </BrowserRouter>
       </ThemeProvider>
     </Provider>
