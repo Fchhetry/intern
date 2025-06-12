@@ -12,7 +12,9 @@ import {
   TableCell,
   Paper,
   Button,
+  IconButton,
 } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -67,13 +69,13 @@ export default function StudentList() {
                     <TableCell>{student.gender}</TableCell>
                     <TableCell>{student.phone}</TableCell>
                     <TableCell>
-                      <Button
-                        variant="outlined"
+                      <IconButton
                         color="secondary"
+                        aria-label="edit student"
                         onClick={() => navigate(`/edit/${student.id}`)}
                       >
-                        Edit
-                      </Button>
+                        <EditIcon />
+                      </IconButton>
                     </TableCell>
                   </TableRow>
                 ))}
