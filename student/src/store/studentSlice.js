@@ -22,8 +22,20 @@ const initialState = {
 
 const studentSlice = createSlice({
   name: 'students',
-  initialState,
- 
+  initialState, 
+  reducers: {
+    addStudent: (state, action) => {
+      state.list.push(action.payload);
+    },
+    updateStudent: (state, action) => {
+    const index = state.list.findIndex(s => s.id === action.payload.id);
+    if (index !== -1) {
+      state.list[index] = action.payload;
+    }
+  },
+}
 });
 
+
+export const { addStudent ,updateStudent} = studentSlice.actions;
 export default studentSlice.reducer;
