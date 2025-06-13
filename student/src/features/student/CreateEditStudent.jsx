@@ -34,14 +34,13 @@ export default function CreateEditStudent() {
   useEffect(() => {
     // component load bhayeasi existing form lai prefill garxa
     if (isEditMode && existingStudent) {
-      const [first = '', last = ''] = existingStudent.name.split(' '); // name split into fname, lname
-      setForm({
-        fname: first,
-        lname: last,
-        email: existingStudent.email,
-        gender: existingStudent.gender,
-        phone: existingStudent.phone,
-      });
+     setForm({
+  fname: existingStudent.fname || '',
+  lname: existingStudent.lname || '',
+  email: existingStudent.email || '',
+  gender: existingStudent.gender || '',
+  phone: existingStudent.phone || '',
+});
     }
   }, [isEditMode, existingStudent]);
 
@@ -59,7 +58,9 @@ export default function CreateEditStudent() {
     }
 
     const student = {
-      name: `${fname} ${lname}`, // combine fname and lname into single name
+      id: isEditMode ? Number(id) : Date.now(),
+      fname,
+      lname,
       email,
       gender,
       phone,

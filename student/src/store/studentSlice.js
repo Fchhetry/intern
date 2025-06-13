@@ -33,9 +33,12 @@ const studentSlice = createSlice({
       state.list[index] = action.payload;
     }
   },
+  deleteStudent: (state, action) => {
+    state.list = state.list.filter(student => student.id !== action.payload);
+  },
 }
 });
 
 
-export const { addStudent ,updateStudent} = studentSlice.actions;
+export const { addStudent ,updateStudent, deleteStudent} = studentSlice.actions;
 export default studentSlice.reducer;
