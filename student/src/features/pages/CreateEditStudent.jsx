@@ -12,27 +12,32 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { addStudent, updateStudent } from '../../store/StudentSlice';
 
+// id is component that comes form URL parameters via React Router's useParams()
 export default function CreateEditStudent() {
-  const { id } = useParams(); // if id exists, it's edit mode
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const { id } = useParams(); // if id exists, it's edit mode 
+  const dispatch = useDispatch(); // redux actions
+  const navigate = useNavigate(); // redirect to another route
 
-  const isEditMode = Boolean(id);
+  const isEditMode = Boolean(id); // if true student is retrieved from redux using id
   const existingStudent = useSelector(state =>
     state.students.list.find(s => s.id === Number(id))
   );
 
   const [form, setForm] = useState({
-    name: '',
+    fname: '', // First name input
+    lname: '', // Last name input
     email: '',
     gender: '',
     phone: '',
   });
 
   useEffect(() => {
+    // component load bhayeasi existing form lai prefill garxa
     if (isEditMode && existingStudent) {
+      const [first = '', last = ''] = existingStudent.name.split(' '); // name split into fname, lname
       setForm({
-        name: existingStudent.name,
+        fname: first,
+        lname: last,
         email: existingStudent.email,
         gender: existingStudent.gender,
         phone: existingStudent.phone,
@@ -41,23 +46,32 @@ export default function CreateEditStudent() {
   }, [isEditMode, existingStudent]);
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setForm({ ...form, [e.target.name]: e.target.value }); // handler for all fields using name
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!form.name || !form.email || !form.gender || !form.phone) {
-      alert('Please fill all fields');
+    e.preventDefault(); // prevents reload
+    const { fname, lname, email, gender, phone } = form;
+
+    if (!fname || !lname || !email || !gender || !phone) {
+      alert('Please fill all fields'); // fill all fields
       return;
     }
 
+    const student = {
+      name: `${fname} ${lname}`, // combine fname and lname into single name
+      email,
+      gender,
+      phone,
+    };
+
     if (isEditMode) {
-      dispatch(updateStudent({ ...form, id: Number(id) }));
+      dispatch(updateStudent({ ...student, id: Number(id) })); // for editing
     } else {
-      dispatch(addStudent({ ...form, id: Date.now() }));
+      dispatch(addStudent({ ...student, id: Date.now() })); // new entries
     }
 
-    navigate('/');
+    navigate('/'); // redirect to student list
   };
 
   // If editing and student is not found
@@ -96,9 +110,17 @@ export default function CreateEditStudent() {
             <TextField
               fullWidth
               size="small"
-              label="Name"
-              name="name"
-              value={form.name}
+              label="First Name"
+              name="fname"
+              value={form.fname}
+              onChange={handleChange}
+            />
+            <TextField
+              fullWidth
+              size="small"
+              label="Last Name"
+              name="lname"
+              value={form.lname}
               onChange={handleChange}
             />
             <TextField

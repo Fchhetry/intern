@@ -45,7 +45,7 @@ export default function StudentList() {
             variant="contained"
             color="primary"
             onClick={() => navigate('/create')}
-            sx={{ marginBottom: 2 }}
+            sx={{ marginBottom: 2,  justifyContent: 'flex-end', display: 'flex'  }}
           >
             Add Student
           </Button>
@@ -64,7 +64,7 @@ export default function StudentList() {
               <TableBody>
                 {students.map((student) => (
                   <TableRow key={student.id}>
-                    <TableCell>{student.name}</TableCell>
+                    <TableCell>{`${student.fname} ${student.lname}`}</TableCell>
                     <TableCell>{student.email}</TableCell>
                     <TableCell>{student.gender}</TableCell>
                     <TableCell>{student.phone}</TableCell>
