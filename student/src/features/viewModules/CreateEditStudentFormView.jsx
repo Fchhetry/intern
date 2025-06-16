@@ -9,87 +9,87 @@ import {
 } from '@mui/material';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import MenuItem from '@mui/material/MenuItem';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
-import { addStudent, updateStudent } from '../../store/StudentSlice';
+// import { useDispatch, useSelector } from 'react-redux';
+ import { useNavigate, useParams } from 'react-router-dom';
+// import { addStudent, updateStudent } from '../../store/StudentSlice';
 
 // id is component that comes form URL parameters via React Router's useParams()
-export default function CreateEditStudent() {
-  const { id } = useParams(); // if id exists, it's edit mode 
-  const dispatch = useDispatch(); // redux actions
-  const navigate = useNavigate(); // redirect to another route
+// export default function CreateEditStudent() {
+//   const { id } = useParams(); // if id exists, it's edit mode 
+//   const dispatch = useDispatch(); // redux actions
+   const navigate = useNavigate(); // redirect to another route
 
-  const isEditMode = Boolean(id); // if true student is retrieved from redux using id
-  const existingStudent = useSelector(state =>
-    state.students.list.find(s => s.id === Number(id))
-  );
+//   const isEditMode = Boolean(id); // if true student is retrieved from redux using id
+//   const existingStudent = useSelector(state =>
+//     state.students.list.find(s => s.id === Number(id))
+//   );
 
-  const [form, setForm] = useState({
-    fname: '', // First name input
-    lname: '', // Last name input
-    email: '',
-    gender: '',
-    phone: '',
-  });
+//   const [form, setForm] = useState({
+//     fname: '', // First name input
+//     lname: '', // Last name input
+//     email: '',
+//     gender: '',
+//     phone: '',
+//   });
 
-  useEffect(() => {
-    // component load bhayeasi existing form lai prefill garxa
-    if (isEditMode && existingStudent) {
-     setForm({
-  fname: existingStudent.fname || '',
-  lname: existingStudent.lname || '',
-  email: existingStudent.email || '',
-  gender: existingStudent.gender || '',
-  phone: existingStudent.phone || '',
-});
-    }
-  }, [isEditMode, existingStudent]);
+//   useEffect(() => {
+//     // component load bhayeasi existing form lai prefill garxa
+//     if (isEditMode && existingStudent) {
+//      setForm({
+//   fname: existingStudent.fname || '',
+//   lname: existingStudent.lname || '',
+//   email: existingStudent.email || '',
+//   gender: existingStudent.gender || '',
+//   phone: existingStudent.phone || '',
+// });
+//     }
+//   }, [isEditMode, existingStudent]);
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value }); // handler for all fields using name
-  };
+//   const handleChange = (e) => {
+//     setForm({ ...form, [e.target.name]: e.target.value }); // handler for all fields using name
+//   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault(); // prevents reload
-    const { fname, lname, email, gender, phone } = form;
+//   const handleSubmit = (e) => {
+//     e.preventDefault(); // prevents reload
+//     const { fname, lname, email, gender, phone } = form;
 
-    if (!fname || !lname || !email || !gender || !phone) {
-      alert('Please fill all fields'); // fill all fields
-      return;
-    }
+//     if (!fname || !lname || !email || !gender || !phone) {
+//       alert('Please fill all fields'); // fill all fields
+//       return;
+//     }
 
-    const student = {
-      id: isEditMode ? Number(id) : Date.now(),
-      fname,
-      lname,
-      email,
-      gender,
-      phone,
-    };
+//     const student = {
+//       id: isEditMode ? Number(id) : Date.now(),
+//       fname,
+//       lname,
+//       email,
+//       gender,
+//       phone,
+//     };
 
-    if (isEditMode) {
-      dispatch(updateStudent({ ...student, id: Number(id) })); // for editing
-    } else {
-      dispatch(addStudent({ ...student, id: Date.now() })); // new entries
-    }
+//     if (isEditMode) {
+//       dispatch(updateStudent({ ...student, id: Number(id) })); // for editing
+//     } else {
+//       dispatch(addStudent({ ...student, id: Date.now() })); // new entries
+//     }
 
-    navigate('/'); // redirect to student list
-  };
+//     navigate('/'); // redirect to student list
+//   };
 
-  // If editing and student is not found
-  if (isEditMode && !existingStudent) {
-    return (
-      <Container sx={{ mt: 4 }}>
-        <Typography variant="h6" color="error" align="center">
-          Student not found.
-        </Typography>
-        <Button variant="contained" onClick={() => navigate('/')}>
-          Back to List
-        </Button>
-      </Container>
-    );
-  }
-
+//   // If editing and student is not found
+//   if (isEditMode && !existingStudent) {
+//     return (
+//       <Container sx={{ mt: 4 }}>
+//         <Typography variant="h6" color="error" align="center">
+//           Student not found.
+//         </Typography>
+//         <Button variant="contained" onClick={() => navigate('/')}>
+//           Back to List
+//         </Button>
+//       </Container>
+//     );
+//   }
+export default function StudentForm({ form, handleChange, handleSubmit, isEditMode }) {
   return (
     <Container sx={{ mt: 4, width: '50%', mx: 'auto' }}>
       <Typography

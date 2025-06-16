@@ -10,7 +10,7 @@ import {
   IconButton,
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
-import DeleteStudent from '../pages/DeleteStudent';
+import DeleteStudent from '../student/DeleteStudentFormPage';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 

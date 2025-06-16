@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import StudentList from "../features/viewModules/StudentList";
-import CreateEditStudent from "../features/student/CreateEditStudent";
+import CreateEditStudent from "../features/viewModules/CreateEditStudentFormView";
 
 export default function AppRoutes() {
   return (
