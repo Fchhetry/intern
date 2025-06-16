@@ -10,6 +10,5 @@ export default function AppRoutes() {
       <Route path="/create" element={<CreateEditStudent />} />
       <Route path="/edit/:id" element={<CreateEditStudent />} />
     </Routes>
-  );
+  );
 }
- 

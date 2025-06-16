@@ -7,89 +7,92 @@ import {
   CardContent,
   Box
 } from '@mui/material';
-import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
+import { addStudent, updateStudent } from '../../store/StudentSlice';
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import MenuItem from '@mui/material/MenuItem';
-// import { useDispatch, useSelector } from 'react-redux';
- import { useNavigate, useParams } from 'react-router-dom';
-// import { addStudent, updateStudent } from '../../store/StudentSlice';
 
-// id is component that comes form URL parameters via React Router's useParams()
-// export default function CreateEditStudent() {
-//   const { id } = useParams(); // if id exists, it's edit mode 
-//   const dispatch = useDispatch(); // redux actions
-   const navigate = useNavigate(); // redirect to another route
 
-//   const isEditMode = Boolean(id); // if true student is retrieved from redux using id
-//   const existingStudent = useSelector(state =>
-//     state.students.list.find(s => s.id === Number(id))
-//   );
+export default function CreateEditStudent({ onSubmit }) {
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-//   const [form, setForm] = useState({
-//     fname: '', // First name input
-//     lname: '', // Last name input
-//     email: '',
-//     gender: '',
-//     phone: '',
-//   });
+  const isEditMode = Boolean(id);
+  const existingStudent = useSelector(state =>
+    state.students.list.find(s => s.id === Number(id))
+  );
 
-//   useEffect(() => {
-//     // component load bhayeasi existing form lai prefill garxa
-//     if (isEditMode && existingStudent) {
-//      setForm({
-//   fname: existingStudent.fname || '',
-//   lname: existingStudent.lname || '',
-//   email: existingStudent.email || '',
-//   gender: existingStudent.gender || '',
-//   phone: existingStudent.phone || '',
-// });
-//     }
-//   }, [isEditMode, existingStudent]);
+  const [form, setForm] = useState({
+    fname: '',
+    lname: '',
+    email: '',
+    gender: '',
+    phone: '',
+  });
 
-//   const handleChange = (e) => {
-//     setForm({ ...form, [e.target.name]: e.target.value }); // handler for all fields using name
-//   };
+  useEffect(() => {
+    if (isEditMode && existingStudent) {
+      setForm({
+        fname: existingStudent.fname || '',
+        lname: existingStudent.lname || '',
+        email: existingStudent.email || '',
+        gender: existingStudent.gender || '',
+        phone: existingStudent.phone || '',
+      });
+    }
+  }, [isEditMode, existingStudent]);
 
-//   const handleSubmit = (e) => {
-//     e.preventDefault(); // prevents reload
-//     const { fname, lname, email, gender, phone } = form;
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
-//     if (!fname || !lname || !email || !gender || !phone) {
-//       alert('Please fill all fields'); // fill all fields
-//       return;
-//     }
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-//     const student = {
-//       id: isEditMode ? Number(id) : Date.now(),
-//       fname,
-//       lname,
-//       email,
-//       gender,
-//       phone,
-//     };
+    const { fname, lname, email, gender, phone } = form;
 
-//     if (isEditMode) {
-//       dispatch(updateStudent({ ...student, id: Number(id) })); // for editing
-//     } else {
-//       dispatch(addStudent({ ...student, id: Date.now() })); // new entries
-//     }
+    if (!fname || !lname || !email || !gender || !phone) {
+      alert('Please fill all fields');
+      return;
+    }
 
-//     navigate('/'); // redirect to student list
-//   };
+    const student = {
+      id: isEditMode ? Number(id) : Date.now(),
+      fname,
+      lname,
+      email,
+      gender,
+      phone,
+    };
 
-//   // If editing and student is not found
-//   if (isEditMode && !existingStudent) {
-//     return (
-//       <Container sx={{ mt: 4 }}>
-//         <Typography variant="h6" color="error" align="center">
-//           Student not found.
-//         </Typography>
-//         <Button variant="contained" onClick={() => navigate('/')}>
-//           Back to List
-//         </Button>
-//       </Container>
-//     );
-//   }
-export default function StudentForm({ form, handleChange, handleSubmit, isEditMode }) {
+    if (onSubmit) {
+      onSubmit(student, isEditMode);
+    } else {
+    
+      if (isEditMode) {
+        dispatch(updateStudent(student));
+      } else {
+        dispatch(addStudent(student));
+      }
+      navigate('/');
+    }
+  };
+
+  if (isEditMode && !existingStudent) {
+    return (
+      <Container sx={{ mt: 4 }}>
+        <Typography variant="h6" color="error" align="center">
+          Student not found.
+        </Typography>
+        <Button variant="contained" onClick={() => navigate('/')}>
+          Back to List
+        </Button>
+      </Container>
+    );
+  }
+
   return (
     <Container sx={{ mt: 4, width: '50%', mx: 'auto' }}>
       <Typography
@@ -110,6 +113,7 @@ export default function StudentForm({ form, handleChange, handleSubmit, isEditMo
         <CardContent>
           <ValidatorForm onSubmit={handleSubmit}>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+
             <TextValidator
               fullWidth
               size="small"
@@ -129,6 +133,7 @@ export default function StudentForm({ form, handleChange, handleSubmit, isEditMo
               onChange={handleChange}
               validators={['required']}
               errorMessages={['Last name is required']}
+
             />
             <TextValidator
               fullWidth
@@ -137,26 +142,24 @@ export default function StudentForm({ form, handleChange, handleSubmit, isEditMo
               name="email"
               value={form.email}
               onChange={handleChange}
-              validators={['required', 'isEmail']}
-              errorMessages={['Email is required', 'Email is not valid']}
+              validators={['required']}
+              errorMessages={['Email is required']}
             />
             <TextValidator
-              select
               fullWidth
               size="small"
               label="Gender"
               name="gender"
               value={form.gender}
               onChange={handleChange}
-              validators={['required']}
-              errorMessages={['Gender is required']}
+              validators={['required', 'isEmail']}
+              errorMessages={['Gender is required', 'Email is not valid']}
             >
               <MenuItem value="">Select Gender</MenuItem>
               <MenuItem value="Male">Male</MenuItem>
               <MenuItem value="Female">Female</MenuItem>
               <MenuItem value="Other">Other</MenuItem>
             </TextValidator>
-
             
             <TextValidator
               fullWidth
@@ -164,8 +167,7 @@ export default function StudentForm({ form, handleChange, handleSubmit, isEditMo
               label="Phone"
               name="phone"
               value={form.phone}
-              onChange={handleChange}
-              validators={['required', 'matchRegexp:^\\d{10}$']}
+              onChange={handleChange}validators={['required', 'matchRegexp:^\\d{10}$']}
               errorMessages={['Phone is required', 'Phone must be 10 digits']}
             />
 
