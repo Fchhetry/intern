@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import {
   Container,
-  TextField,
   Typography,
   Button,
   Card,
   CardContent,
   Box
 } from '@mui/material';
+import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+import MenuItem from '@mui/material/MenuItem';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { addStudent, updateStudent } from '../../store/StudentSlice';
@@ -107,46 +108,65 @@ export default function CreateEditStudent() {
 
       <Card>
         <CardContent>
-          <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <TextField
+          <ValidatorForm onSubmit={handleSubmit}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <TextValidator
               fullWidth
               size="small"
               label="First Name"
               name="fname"
               value={form.fname}
               onChange={handleChange}
+              validators={['required']}
+              errorMessages={['First name is required']}
             />
-            <TextField
+            <TextValidator
               fullWidth
               size="small"
               label="Last Name"
               name="lname"
               value={form.lname}
               onChange={handleChange}
+              validators={['required']}
+              errorMessages={['Last name is required']}
             />
-            <TextField
+            <TextValidator
               fullWidth
               size="small"
               label="Email"
               name="email"
               value={form.email}
               onChange={handleChange}
+              validators={['required', 'isEmail']}
+              errorMessages={['Email is required', 'Email is not valid']}
             />
-            <TextField
+            <TextValidator
+              select
               fullWidth
               size="small"
               label="Gender"
               name="gender"
               value={form.gender}
               onChange={handleChange}
-            />
-            <TextField
+              validators={['required']}
+              errorMessages={['Gender is required']}
+            >
+              <MenuItem value="">Select Gender</MenuItem>
+              <MenuItem value="Male">Male</MenuItem>
+              <MenuItem value="Female">Female</MenuItem>
+              <MenuItem value="Other">Other</MenuItem>
+            </TextValidator>
+
+            
+            <TextValidator
               fullWidth
               size="small"
               label="Phone"
               name="phone"
               value={form.phone}
               onChange={handleChange}
+              validators={['required', 'matchRegexp:^\\d{10}$']}
+              errorMessages={['Phone is required', 'Phone must be 10 digits']}
             />
 
             <Box sx={{ display: 'flex', gap: 2 }}>
@@ -157,7 +177,8 @@ export default function CreateEditStudent() {
                 Cancel
               </Button>
             </Box>
-          </Box>
+            </Box>
+          </ValidatorForm>
         </CardContent>
       </Card>
     </Container>
