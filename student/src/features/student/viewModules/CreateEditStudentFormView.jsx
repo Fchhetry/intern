@@ -27,8 +27,9 @@ export default function CreateEditStudentFormView({
     email: "",
     gender: "",
     phone: "",
+    bio: "",
   });
-
+const genderOptions = ["Male", "Female", "Other"];
   useEffect(() => {
     //runs either isEditMode or student changes
     //edit mode ma data available huncha meaning prefilled huncha
@@ -40,6 +41,7 @@ export default function CreateEditStudentFormView({
         email: student.email || "",
         gender: student.gender || "",
         phone: student.phone || "",
+        bio: student.bio || "",
       });
     }
   }, [isEditMode, student]);
@@ -124,9 +126,11 @@ export default function CreateEditStudentFormView({
                 size="small"
               >
                 <MenuItem value="">Select Gender</MenuItem>
-                <MenuItem value="Male">Male</MenuItem>
-                <MenuItem value="Female">Female</MenuItem>
-                <MenuItem value="Other">Other</MenuItem>
+                {genderOptions.map((gender) => (
+                  <MenuItem key={gender} value={gender}>
+                    {gender}
+                  </MenuItem>
+                ))}
               </SelectValidator>
 
               <TextValidator
@@ -136,6 +140,17 @@ export default function CreateEditStudentFormView({
                 onChange={handleChange}
                 validators={["required", "matchRegexp:^\\d{10}$"]}
                 errorMessages={["Phone is required", "Phone must be 10 digits"]}
+                fullWidth
+                size="small"
+              />
+
+              <TextValidator
+                label="Bio"
+                name="bio"
+                value={form.bio}
+                onChange={handleChange}
+                validators={["required"]}
+                errorMessages={["Bio is required"]}
                 fullWidth
                 size="small"
               />
