@@ -23,7 +23,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import StudentCard from '../components/StudentCard';
 
-export default function StudentList() {
+export default function StudentListPage() {
   const students = useSelector((state) => state.students.list);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -34,7 +34,6 @@ export default function StudentList() {
   const open = Boolean(anchorEl);
   const [accountAnchorEl, setAccountAnchorEl] = useState(null);
   const accountMenuOpen = Boolean(accountAnchorEl);
-
   const [featuresAnchorEl, setFeaturesAnchorEl] = useState(null);
   const isFeaturesMenuOpen = Boolean(featuresAnchorEl);
 
@@ -43,17 +42,9 @@ export default function StudentList() {
     { label: 'Axios', path: '/axios' }
   ];
 
-  const handleAccountMenuClose = () => {
-    setAccountAnchorEl(null);
-  };
-
-  const handleFeaturesClick = (event) => {
-    setFeaturesAnchorEl(event.currentTarget);
-  };
-
-  const handleFeaturesClose = () => {
-    setFeaturesAnchorEl(null);
-  };
+  const handleAccountMenuClose = () => setAccountAnchorEl(null);
+  const handleFeaturesClick = (event) => setFeaturesAnchorEl(event.currentTarget);
+  const handleFeaturesClose = () => setFeaturesAnchorEl(null);
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -84,12 +75,8 @@ export default function StudentList() {
     handleMenuClose();
   };
 
-  const list = (anchor) => (
-    <Box
-      sx={{ width: 250, backgroundColor: '#e3f2fd' }}
-      role="presentation"
-      onKeyDown={toggleDrawer(anchor, false)}
-    >
+  const drawerList = (anchor) => (
+    <Box sx={{ width: 250, backgroundColor: '#e3f2fd' }} role="presentation">
       <List>
         <ListItem disablePadding>
           <ListItemButton onClick={() => navigate('/')}>
@@ -126,75 +113,119 @@ export default function StudentList() {
   );
 
   return (
-    <Container sx={{ mt: 4, mb: 4 , backgroundColor: 'rgb(221, 226, 232)' }}>
-      {/* Drawer */}
-      <Box sx={{ mb: 2 }}>
-        <Button onClick={toggleDrawer('left', true)} startIcon={<MenuIcon />}>
+    <Container maxWidth="xl" sx={{ mt: 4, mb: 4, backgroundColor: 'rgb(221, 226, 232)' }}>
+      {/* Header Bar */}
+      <Box
+        sx={{
+          width: '100%',
+          position: 'relative',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          backgroundColor: '#1976d2',
+          px: 2,
+          py: 2,
+          mb: 4,
+        }}
+      >
+        {/* Drawer Trigger */}
+        <Button
+          onClick={toggleDrawer('left', true)}
+          startIcon={<MenuIcon />}
+          sx={{ color: '#ffffff', backgroundColor: '#1976d2' }}
+        >
           Menu
         </Button>
+
+        {/* Title */}
+        <Typography
+          variant="h4"
+          sx={{
+            position: 'absolute',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            color: '#ffffff',
+            fontWeight: 'bold',
+          }}
+        >
+          Student List
+        </Typography>
+
+        {/* Add Student */}
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => navigate('/create')}
+          sx={{
+            backgroundColor: '#ffffff',
+            color: '#1976d2',
+            fontWeight: 'bold',
+          }}
+        >
+          Add Student
+        </Button>
+
+        {/* Drawer */}
         <SwipeableDrawer
           anchor="left"
           open={drawerState.left}
           onClose={toggleDrawer('left', false)}
           onOpen={toggleDrawer('left', true)}
         >
-          {list('left')}
+          {drawerList('left')}
         </SwipeableDrawer>
       </Box>
 
-      <Typography
-        variant="h4"
-        gutterBottom
-        sx={{
-          textAlign: 'center',
-          color: '#ffffff',
-          backgroundColor: '#1976d2',
-          padding: 1,
-          marginBottom: 3,
-        }}
+      {/* Nested Grid for Student Cards */}
+
+      <Grid
+        container
+        spacing={4}
+        justifyContent="center"
       >
-        Student List
-      </Typography>
-
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => navigate('/create')}
-        >
-          Add Student
-        </Button>
-      </Box>
-
-      <Grid container spacing={3}>
-        {students.map((student) => (
-          <Grid item xs={12} sm={6} md={4} key={student.id}>
-            <StudentCard
-              student={student}
-              onAvatarClick={(e, id) => {
-                setAccountAnchorEl(e.currentTarget);
-                setSelectedStudentId(id);
-              }}
-              accountAnchorEl={accountAnchorEl}
-              accountMenuOpen={accountMenuOpen && selectedStudentId === student.id}
-              onAccountMenuClose={handleAccountMenuClose}
-              selectedStudentId={selectedStudentId}
-              onMoreMenuClick={handleMenuOpen}
-            />
+        {students.length > 0 ? (
+          students.map((student) => (
+            <Grid item xs={12} sm={6} md={4} lg={3} key={student.id}>
+              <Box
+                sx={{
+                  height: '100%',
+                  //width: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
+              >
+                <StudentCard
+                  student={student}
+                  onAvatarClick={(e, id) => {
+                    setAccountAnchorEl(e.currentTarget);
+                    setSelectedStudentId(id);
+                  }}
+                  accountAnchorEl={accountAnchorEl}
+                  accountMenuOpen={accountMenuOpen && selectedStudentId === student.id}
+                  onAccountMenuClose={handleAccountMenuClose}
+                  selectedStudentId={selectedStudentId}
+                  onMoreMenuClick={handleMenuOpen}
+                />
+              </Box>
+            </Grid>
+          ))
+        ) : (
+          <Grid item xs={12}>
+            <Typography variant="h6" align="center">
+              No students available.
+            </Typography>
           </Grid>
-        ))}
+        )}
       </Grid>
 
-      {/* Menu for edit and delete */}
+
+      {/* Edit/Delete Menu */}
       <Menu
         anchorEl={anchorEl}
         open={open}
         onClose={handleMenuClose}
         PaperProps={{
-          sx: {
-            maxHeight: 200,
-            width: '200px',
-          },
+          sx: { maxHeight: 200, width: '200px' },
         }}
       >
         <MenuItem
@@ -227,4 +258,3 @@ export default function StudentList() {
     </Container>
   );
 }
-
