@@ -3,11 +3,8 @@ import {
   Container,
   Typography,
   Grid,
-  Card,
-  CardContent,
   Box,
   Button,
-  IconButton,
   List,
   ListItem,
   ListItemButton,
@@ -20,15 +17,11 @@ import {
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import MenuIcon from '@mui/icons-material/Menu';
-import Avatar from '@mui/material/Avatar';
-import Tooltip from '@mui/material/Tooltip';
-import Divider from '@mui/material/Divider';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { deleteStudent } from '../../../store/StudentSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import StudentCard from '../components/StudentCard';
-
 
 export default function StudentList() {
   const students = useSelector((state) => state.students.list);
@@ -42,12 +35,24 @@ export default function StudentList() {
   const [accountAnchorEl, setAccountAnchorEl] = useState(null);
   const accountMenuOpen = Boolean(accountAnchorEl);
 
-  const handleAccountMenuOpen = (event) => {
-    setAccountAnchorEl(event.currentTarget);
-  };
+  const [featuresAnchorEl, setFeaturesAnchorEl] = useState(null);
+  const isFeaturesMenuOpen = Boolean(featuresAnchorEl);
+
+  const featuresOptions = [
+    { label: 'Fetch', path: '/fetch' },
+    { label: 'Axios', path: '/axios' }
+  ];
 
   const handleAccountMenuClose = () => {
     setAccountAnchorEl(null);
+  };
+
+  const handleFeaturesClick = (event) => {
+    setFeaturesAnchorEl(event.currentTarget);
+  };
+
+  const handleFeaturesClose = () => {
+    setFeaturesAnchorEl(null);
   };
 
   const toggleDrawer = (anchor, open) => (event) => {
@@ -72,18 +77,17 @@ export default function StudentList() {
   };
 
   const handleDeleteStudent = (id) => {
-  const confirm = window.confirm("Are you sure you want to delete this student?");
-  if (confirm) {
-    dispatch(deleteStudent(id));
-  }
-  handleMenuClose();
-};
+    const confirm = window.confirm("Are you sure you want to delete this student?");
+    if (confirm) {
+      dispatch(deleteStudent(id));
+    }
+    handleMenuClose();
+  };
 
   const list = (anchor) => (
     <Box
-      sx={{ width: 250 }}
+      sx={{ width: 250, backgroundColor: '#e3f2fd' }}
       role="presentation"
-      onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
@@ -92,12 +96,37 @@ export default function StudentList() {
             <ListItemText primary="Home" />
           </ListItemButton>
         </ListItem>
+
+        <ListItem disablePadding>
+          <ListItemButton onClick={handleFeaturesClick}>
+            <ListItemText primary="Features" />
+            <ArrowDropDownIcon />
+          </ListItemButton>
+        </ListItem>
       </List>
+
+      <Menu
+        anchorEl={featuresAnchorEl}
+        open={isFeaturesMenuOpen}
+        onClose={handleFeaturesClose}
+      >
+        {featuresOptions.map((option) => (
+          <MenuItem
+            key={option.path}
+            onClick={() => {
+              navigate(option.path);
+              handleFeaturesClose();
+            }}
+          >
+            {option.label}
+          </MenuItem>
+        ))}
+      </Menu>
     </Box>
   );
 
   return (
-    <Container sx={{ mt: 4, mb: 4 }}>
+    <Container sx={{ mt: 4, mb: 4 , backgroundColor: 'rgb(221, 226, 232)' }}>
       {/* Drawer */}
       <Box sx={{ mb: 2 }}>
         <Button onClick={toggleDrawer('left', true)} startIcon={<MenuIcon />}>
@@ -112,6 +141,7 @@ export default function StudentList() {
           {list('left')}
         </SwipeableDrawer>
       </Box>
+
       <Typography
         variant="h4"
         gutterBottom
@@ -137,27 +167,25 @@ export default function StudentList() {
       </Box>
 
       <Grid container spacing={3}>
-          {students.map((student) => (
-            <Grid item xs={12} sm={6} md={4} key={student.id}>
-              <StudentCard
-                student={student}
-                onAvatarClick={(e, id) => {
-                  setAccountAnchorEl(e.currentTarget);
-                  setSelectedStudentId(id);
-                }}
-                accountAnchorEl={accountAnchorEl}
-                accountMenuOpen={accountMenuOpen && selectedStudentId === student.id}
-                onAccountMenuClose={handleAccountMenuClose}
-                selectedStudentId={selectedStudentId}
-                onMoreMenuClick={handleMenuOpen}
-              />
-            </Grid>
+        {students.map((student) => (
+          <Grid item xs={12} sm={6} md={4} key={student.id}>
+            <StudentCard
+              student={student}
+              onAvatarClick={(e, id) => {
+                setAccountAnchorEl(e.currentTarget);
+                setSelectedStudentId(id);
+              }}
+              accountAnchorEl={accountAnchorEl}
+              accountMenuOpen={accountMenuOpen && selectedStudentId === student.id}
+              onAccountMenuClose={handleAccountMenuClose}
+              selectedStudentId={selectedStudentId}
+              onMoreMenuClick={handleMenuOpen}
+            />
+          </Grid>
         ))}
       </Grid>
 
-
       {/* Menu for edit and delete */}
-     
       <Menu
         anchorEl={anchorEl}
         open={open}
@@ -179,7 +207,9 @@ export default function StudentList() {
           <ListItemIcon sx={{ minWidth: 'unset', mr: 1 }}>
             <EditIcon fontSize="small" sx={{ color: '#1976d2', p: 0.5 }} />
           </ListItemIcon>
-          <Typography variant="body2" sx={{ fontWeight: 500 }}>Edit</Typography>
+          <Typography variant="body2" sx={{ fontWeight: 500 }}>
+            Edit
+          </Typography>
         </MenuItem>
 
         <MenuItem
@@ -187,13 +217,14 @@ export default function StudentList() {
           sx={{ gap: 1, px: 2, py: 1 }}
         >
           <ListItemIcon sx={{ minWidth: 'unset', mr: 1 }}>
-          <DeleteIcon fontSize="small" sx={{ color: '#d32f2f', p: 0.5 }} />
+            <DeleteIcon fontSize="small" sx={{ color: '#d32f2f', p: 0.5 }} />
           </ListItemIcon>
-          <Typography variant="body2" sx={{ fontWeight: 500 }}>Delete</Typography>
+          <Typography variant="body2" sx={{ fontWeight: 500 }}>
+            Delete
+          </Typography>
         </MenuItem>
       </Menu>
     </Container>
   );
 }
-
 

@@ -10,7 +10,6 @@ import {
   MenuItem,
   Tooltip,
   Divider,
-  ListItemIcon,
 } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
@@ -26,7 +25,10 @@ export default function StudentCard({
   return (
     <Card
       sx={{
-        height: '100%',
+        height: '200',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
         cursor: 'pointer',
         transition: '0.3s',
         backgroundColor: '#f5f5f5',
@@ -117,7 +119,16 @@ export default function StudentCard({
           <strong>Email:</strong> {student.email}
         </Typography>
         <Divider />
-        <Typography variant="body2">
+        <Typography variant="body2" 
+        sx={{
+            maxWidth: '100%',
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis',
+            display : 'block',
+        }}
+        >
+    
         <strong>Bio:</strong> {student.bio}
         </Typography>
       </CardContent>
