@@ -8,6 +8,7 @@ import { persistReducer, persistStore } from 'redux-persist';
 // Persist config
 const persistConfig = {
   key: 'root',
+  version : 2,
   storage,
 };
 
