@@ -12,14 +12,12 @@ function Fetch() {
 
   return (
     <div>
-    
-      <h2>Posts</h2>
+    <h2>Posts</h2>
       <ul>
         {data.map((item) => ( //loops though every post in data
           <li key={item.id}>{item.title}</li> // uniquely identify each item in the list
         ))}
-      </ul>
-      
+      </ul> 
     </div>
   );
 }

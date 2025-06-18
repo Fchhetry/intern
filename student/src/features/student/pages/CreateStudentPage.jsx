@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import CreateEditStudentFormView from "../viewModules/CreateEditStudentFormView";
-import { addStudent } from "../../../store/StudentSlice";
+import { addStudent } from "../../../store/studentSlice";
 
 export default function CreateStudentPage() {
   const dispatch = useDispatch(); // trigger redux actions

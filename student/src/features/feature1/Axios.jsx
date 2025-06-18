@@ -1,24 +1,31 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { 
+  Typography,
+   List, 
+   ListItem, 
+   ListItemText, 
+   Container } from '@mui/material';
 
-function Axios() {
+export default function Axios() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    axios.get('https://jsonplaceholder.typicode.com/posts') // Sends a GET request to the specified URL
-      .then((response) => setData(response.data))            // save to state
-      .catch((error) => console.error('Error:', error));     // handle errors
+    axios.get('https://jsonplaceholder.typicode.com/posts')
+      .then((response) => setData(response.data))
+      .catch((error) => console.error('Axios Error:', error));
   }, []);
 
   return (
-    <div>
-      <h2>Posts</h2>
-      <ul>
+    <Container sx={{ mt: 4 }}>
+      <Typography variant="h4" gutterBottom>Axios Data</Typography>
+      <List>
         {data.map((item) => (
-          <li key={item.id}>{item.title}</li>
+          <ListItem key={item.id}>
+            <ListItemText primary={item.title} />
+          </ListItem>
         ))}
-      </ul>
-    </div>
+      </List>
+    </Container>
   );
 }
-
-export default Axios;
