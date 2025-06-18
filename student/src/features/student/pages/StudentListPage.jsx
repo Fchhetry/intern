@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Container,
   Typography,
@@ -12,16 +12,16 @@ import {
   SwipeableDrawer,
   Menu,
   MenuItem,
-  ListItemIcon
-} from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import MenuIcon from '@mui/icons-material/Menu';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import { deleteStudent } from '../../../store/StudentSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import StudentCard from '../components/StudentCard';
+  ListItemIcon,
+} from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import MenuIcon from "@mui/icons-material/Menu";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import { deleteStudent } from "../../../store/StudentSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import StudentCard from "../components/StudentCard";
 
 export default function StudentListPage() {
   const students = useSelector((state) => state.students.list);
@@ -38,22 +38,21 @@ export default function StudentListPage() {
   const isFeaturesMenuOpen = Boolean(featuresAnchorEl);
 
   const featuresOptions = [
-    { label: 'Fetch', path: '/fetch' },
-    { label: 'Axios', path: '/axios' }
+    { label: "Fetch", path: "/fetch" },
+    { label: "Axios", path: "/axios" },
   ];
 
   const handleAccountMenuClose = () => setAccountAnchorEl(null);
-  const handleFeaturesClick = (event) => setFeaturesAnchorEl(event.currentTarget);
+  const handleFeaturesClick = (event) =>
+    setFeaturesAnchorEl(event.currentTarget);
   const handleFeaturesClose = () => setFeaturesAnchorEl(null);
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
-      event &&
-      event.type === 'keydown' &&
-      (event.key === 'Tab' || event.key === 'Shift')
-    ) {
+      event?.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    )
       return;
-    }
     setDrawerState({ ...drawerState, [anchor]: open });
   };
 
@@ -68,22 +67,21 @@ export default function StudentListPage() {
   };
 
   const handleDeleteStudent = (id) => {
-    const confirm = window.confirm("Are you sure you want to delete this student?");
-    if (confirm) {
-      dispatch(deleteStudent(id));
-    }
+    const confirm = window.confirm(
+      "Are you sure you want to delete this student?"
+    );
+    if (confirm) dispatch(deleteStudent(id));
     handleMenuClose();
   };
 
-  const drawerList = (anchor) => (
-    <Box sx={{ width: 250, backgroundColor: '#e3f2fd' }} role="presentation">
+  const drawerList = () => (
+    <Box sx={{ width: 250, backgroundColor: "#e3f2fd" }} role="presentation">
       <List>
         <ListItem disablePadding>
-          <ListItemButton onClick={() => navigate('/')}>
+          <ListItemButton onClick={() => navigate("/")}>
             <ListItemText primary="Home" />
           </ListItemButton>
         </ListItem>
-
         <ListItem disablePadding>
           <ListItemButton onClick={handleFeaturesClick}>
             <ListItemText primary="Features" />
@@ -91,7 +89,6 @@ export default function StudentListPage() {
           </ListItemButton>
         </ListItem>
       </List>
-
       <Menu
         anchorEl={featuresAnchorEl}
         open={isFeaturesMenuOpen}
@@ -113,106 +110,98 @@ export default function StudentListPage() {
   );
 
   return (
-    <Container maxWidth="xl" sx={{ mt: 4, mb: 4, backgroundColor: 'rgb(221, 226, 232)' }}>
-      {/* Header Bar */}
+    <Container
+      maxWidth="xl"
+      sx={{ mt: 4, mb: 4, backgroundColor: "rgb(221, 226, 232)" }}
+    >
       <Box
         sx={{
-          width: '100%',
-          position: 'relative',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          backgroundColor: '#1976d2',
+          width: "100%",
+          position: "relative",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          backgroundColor: "#1976d2",
           px: 2,
           py: 2,
           mb: 4,
         }}
       >
-        {/* Drawer Trigger */}
         <Button
-          onClick={toggleDrawer('left', true)}
+          onClick={toggleDrawer("left", true)}
           startIcon={<MenuIcon />}
-          sx={{ color: '#ffffff', backgroundColor: '#1976d2' }}
+          sx={{ color: "#ffffff" }}
         >
           Menu
         </Button>
-
-        {/* Title */}
         <Typography
           variant="h4"
           sx={{
-            position: 'absolute',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            color: '#ffffff',
-            fontWeight: 'bold',
+            position: "absolute",
+            left: "50%",
+            transform: "translateX(-50%)",
+            color: "#ffffff",
+            fontWeight: "bold",
           }}
         >
           Student List
         </Typography>
-
-        {/* Add Student */}
         <Button
           variant="contained"
           color="secondary"
-          onClick={() => navigate('/create')}
+          onClick={() => navigate("/create")}
           sx={{
-            backgroundColor: '#ffffff',
-            color: '#1976d2',
-            fontWeight: 'bold',
+            backgroundColor: "#ffffff",
+            color: "#1976d2",
+            fontWeight: "bold",
           }}
         >
           Add Student
         </Button>
-
-        {/* Drawer */}
         <SwipeableDrawer
           anchor="left"
           open={drawerState.left}
-          onClose={toggleDrawer('left', false)}
-          onOpen={toggleDrawer('left', true)}
+          onClose={toggleDrawer("left", false)}
+          onOpen={toggleDrawer("left", true)}
         >
-          {drawerList('left')}
+          {drawerList()}
         </SwipeableDrawer>
       </Box>
 
-      {/* Nested Grid for Student Cards */}
-      <Grid container spacing={4}>
-        {students.length > 0 ? (
-          students.map((student) => (
-           <Grid item xs={12} sm={6} md={4} key={student.id}>
-            <StudentCard
-              student={student}
-              onAvatarClick={(e, id) => {
-                setAccountAnchorEl(e.currentTarget);
-                setSelectedStudentId(id);
-              }}
-              accountAnchorEl={accountAnchorEl}
-              accountMenuOpen={accountMenuOpen && selectedStudentId === student.id}
-              onAccountMenuClose={handleAccountMenuClose}
-              selectedStudentId={selectedStudentId}
-              onMoreMenuClick={handleMenuOpen}
-              sx={{ height: '100%' }} // ensure card stretches to full height
-            />
-          </Grid>
-
-          ))
-        ) : (
-          <Grid item xs={12}>
-            <Typography variant="h6" align="center">
-              No students available.
-            </Typography>
-          </Grid>
-        )}
+      <Grid container spacing={4} alignItems="stretch">
+  {students.length > 0 ? (
+    students.map((student) => (
+      <Grid item xs={12} sm={6} md={4} key={student.id}>
+        <StudentCard
+          student={student}
+          onAvatarClick={(e, id) => {
+            setAccountAnchorEl(e.currentTarget);
+            setSelectedStudentId(id);
+          }}
+          accountAnchorEl={accountAnchorEl}
+          accountMenuOpen={accountMenuOpen && selectedStudentId === student.id}
+          onAccountMenuClose={handleAccountMenuClose}
+          selectedStudentId={selectedStudentId}
+          onMoreMenuClick={handleMenuOpen}
+          sx={{ height: '100%' }} 
+        />
       </Grid>
+    ))
+  ) : (
+    <Grid item xs={12}>
+      <Typography variant="h6" align="center">
+        No students available.
+      </Typography>
+    </Grid>
+  )}
+</Grid>
 
-      {/* Edit/Delete Menu */}
       <Menu
         anchorEl={anchorEl}
         open={open}
         onClose={handleMenuClose}
         PaperProps={{
-          sx: { maxHeight: 200, width: '200px' },
+          sx: { maxHeight: 200, width: "200px" },
         }}
       >
         <MenuItem
@@ -220,26 +209,17 @@ export default function StudentListPage() {
             navigate(`/edit/${selectedStudentId}`);
             handleMenuClose();
           }}
-          sx={{ gap: 1, px: 2, py: 1 }}
         >
-          <ListItemIcon sx={{ minWidth: 'unset', mr: 1 }}>
-            <EditIcon fontSize="small" sx={{ color: '#1976d2', p: 0.5 }} />
+          <ListItemIcon>
+            <EditIcon fontSize="small" sx={{ color: "#1976d2" }} />
           </ListItemIcon>
-          <Typography variant="body2" sx={{ fontWeight: 500 }}>
-            Edit
-          </Typography>
+          Edit
         </MenuItem>
-
-        <MenuItem
-          onClick={() => handleDeleteStudent(selectedStudentId)}
-          sx={{ gap: 1, px: 2, py: 1 }}
-        >
-          <ListItemIcon sx={{ minWidth: 'unset', mr: 1 }}>
-            <DeleteIcon fontSize="small" sx={{ color: '#d32f2f', p: 0.5 }} />
+        <MenuItem onClick={() => handleDeleteStudent(selectedStudentId)}>
+          <ListItemIcon>
+            <DeleteIcon fontSize="small" sx={{ color: "#d32f2f" }} />
           </ListItemIcon>
-          <Typography variant="body2" sx={{ fontWeight: 500 }}>
-            Delete
-          </Typography>
+          Delete
         </MenuItem>
       </Menu>
     </Container>
