@@ -189,7 +189,6 @@ export default function StudentListPage() {
               <Box
                 sx={{
                   height: '100%',
-                  //width: '100%',
                   display: 'flex',
                   flexDirection: 'column',
                 }}

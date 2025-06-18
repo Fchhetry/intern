@@ -131,7 +131,7 @@ export default function StudentCard({
             display: 'block',
           }}
         >
-          <strong>Bio: {student.bio}</strong>
+          <strong>Bio: </strong>{student.bio}
         </Typography>       
       </CardContent>
       </CardActionArea>
