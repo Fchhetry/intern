@@ -52,7 +52,18 @@ export default function StudentListPage() {
   };
 
   return (
-    <Box>
+    <Box >
+      <Typography
+        variant="h5"
+        sx={{
+          color: '#1976d2',
+          position: 'absolute',
+          left: '50%',                
+          transform: 'translateX(-50%)',
+          fontWeight: 'bold',
+          }}
+      > Student List
+      </Typography>
       <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
         <button
           onClick={() => navigate("/create")}
@@ -70,7 +81,7 @@ export default function StudentListPage() {
         </button>
       </Box>
 
-      <Grid container spacing={4} alignItems="stretch">
+      <Grid container spacing={4} alignItems="stretch"  justifyContent="flex-start" >
         {students.length > 0 ? (
           students.map((student) => (
             <Grid item xs={12} sm={6} md={4} key={student.id}>

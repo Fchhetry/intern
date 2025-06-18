@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import {
   Container,
-  Typography,
   Box,
-  Button,
   List,
   ListItem,
   ListItemButton,
@@ -12,9 +10,9 @@ import {
   Menu,
   MenuItem
 } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { Outlet, useNavigate } from 'react-router-dom';
+import PrivateLayout from '../../../layouts/PrivateLayout';
 
 export default function DashboardPage() {
   const navigate = useNavigate();
@@ -75,38 +73,7 @@ export default function DashboardPage() {
 
   return (
     <Container maxWidth="xl" sx={{ mt: 4, mb: 4, backgroundColor: "rgb(221, 226, 232)" }}>
-      <Box
-        sx={{
-          width: '100%',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          backgroundColor: '#1976d2',
-          px: 2,
-          py: 2,
-          mb: 4,
-        }}
-      >
-        <Button
-          onClick={toggleDrawer('left', true)}
-          startIcon={<MenuIcon />}
-          sx={{ color: '#ffffff' }}
-        >
-          Menu
-        </Button>
-        <Typography
-          variant="h4"
-          sx={{
-            position: 'absolute',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            color: '#ffffff',
-            fontWeight: 'bold',
-          }}
-        >
-          Dashboard
-        </Typography>
-      </Box>
+      <PrivateLayout onMenuClick={toggleDrawer('left', true)} />
 
       <SwipeableDrawer
         anchor="left"

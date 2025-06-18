@@ -36,7 +36,7 @@ export default function StudentCard({
       sx={{
         backgroundColor: "#f5f5f5",
         transition: "0.3s",
-        height: "100%",
+        height: "300",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",

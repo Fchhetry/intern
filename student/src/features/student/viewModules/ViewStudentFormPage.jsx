@@ -26,8 +26,8 @@ export default function ViewStudentFormPage() {
   }
 
   return (
-    <Container sx={{ mt: 4 }}>
-      <Card sx={{ p: 3 ,backgroundColor: '#e3f2fd'  }}>
+    <Container sx={{ mt: 4, width: '100%' }} maxWidth="sm" >
+      <Card sx={{ p: 2 ,backgroundColor: '#e3f2fd'  }}>
         <CardContent>
           <Typography variant="h4" gutterBottom>
             Name: {student.fname && student.lname
@@ -39,7 +39,7 @@ export default function ViewStudentFormPage() {
           <Typography>Gender: {student.gender}</Typography>
           <Typography>Bio: {student.bio}</Typography>
         </CardContent>
-        <Box mt={2}>
+        <Box mt={1}>
           <Button variant="contained"  onClick={() => navigate(-1) }>
             Back
           </Button>
