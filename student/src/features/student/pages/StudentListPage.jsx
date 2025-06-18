@@ -177,36 +177,25 @@ export default function StudentListPage() {
       </Box>
 
       {/* Nested Grid for Student Cards */}
-
-      <Grid
-        container
-        spacing={4}
-        justifyContent="center"
-      >
+      <Grid container spacing={4}>
         {students.length > 0 ? (
           students.map((student) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={student.id}>
-              <Box
-                sx={{
-                  height: '100%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                }}
-              >
-                <StudentCard
-                  student={student}
-                  onAvatarClick={(e, id) => {
-                    setAccountAnchorEl(e.currentTarget);
-                    setSelectedStudentId(id);
-                  }}
-                  accountAnchorEl={accountAnchorEl}
-                  accountMenuOpen={accountMenuOpen && selectedStudentId === student.id}
-                  onAccountMenuClose={handleAccountMenuClose}
-                  selectedStudentId={selectedStudentId}
-                  onMoreMenuClick={handleMenuOpen}
-                />
-              </Box>
-            </Grid>
+           <Grid item xs={12} sm={6} md={4} key={student.id}>
+            <StudentCard
+              student={student}
+              onAvatarClick={(e, id) => {
+                setAccountAnchorEl(e.currentTarget);
+                setSelectedStudentId(id);
+              }}
+              accountAnchorEl={accountAnchorEl}
+              accountMenuOpen={accountMenuOpen && selectedStudentId === student.id}
+              onAccountMenuClose={handleAccountMenuClose}
+              selectedStudentId={selectedStudentId}
+              onMoreMenuClick={handleMenuOpen}
+              sx={{ height: '100%' }} // ensure card stretches to full height
+            />
+          </Grid>
+
           ))
         ) : (
           <Grid item xs={12}>
@@ -216,7 +205,6 @@ export default function StudentListPage() {
           </Grid>
         )}
       </Grid>
-
 
       {/* Edit/Delete Menu */}
       <Menu
