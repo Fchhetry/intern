@@ -22,9 +22,9 @@ export default function StudentListPage() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedStudentId, setSelectedStudentId] = useState(null);
   const [accountAnchorEl, setAccountAnchorEl] = useState(null);
-  const accountMenuOpen = Boolean(accountAnchorEl);
 
   const open = Boolean(anchorEl);
+  const accountMenuOpen = Boolean(accountAnchorEl);
 
   const handleMenuOpen = (event, studentId) => {
     setAnchorEl(event.currentTarget);
@@ -45,7 +45,9 @@ export default function StudentListPage() {
     const confirm = window.confirm(
       "Are you sure you want to delete this student?"
     );
-    if (confirm) dispatch(deleteStudent(id));
+    if (confirm) {
+      dispatch(deleteStudent(id));
+    }
     handleMenuClose();
   };
 
@@ -102,9 +104,7 @@ export default function StudentListPage() {
         anchorEl={anchorEl}
         open={open}
         onClose={handleMenuClose}
-        PaperProps={{
-          sx: { maxHeight: 200, width: "200px" },
-        }}
+        PaperProps={{ sx: { maxHeight: 200, width: "200px" } }}
       >
         <MenuItem
           onClick={() => {
