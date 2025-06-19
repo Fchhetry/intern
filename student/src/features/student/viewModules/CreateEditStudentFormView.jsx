@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   Container,
   Typography,
@@ -8,72 +8,22 @@ import {
   Box,
   MenuItem,
 } from "@mui/material";
-import {
-  ValidatorForm,
-  TextValidator,
-  SelectValidator,
-} from "react-material-ui-form-validator";
+import { ValidatorForm, TextValidator, SelectValidator } from "react-material-ui-form-validator";
+import { useStudentForm } from "../../../hooks/hook1";
 
-export default function CreateEditStudentFormView({
-  onSubmit,
-  isEditMode,
-  student,
-}) {
-  //create a state variable  named form that holds the values of all your form fields
-  //setForm function will use to update any value inside this object
-  const [form, setForm] = useState({
-    fname: "",
-    lname: "",
-    email: "",
-    gender: "",
-    phone: "",
-    bio: "",
+export default function CreateEditStudentFormView({ onSubmit, isEditMode, student }) {
+  const { form, genderOptions, handleChange, handleSubmit } = useStudentForm({
+    isEditMode,
+    student,
+    onSubmit,
   });
-const genderOptions = ["Male", "Female", "Other"];
-  useEffect(() => {
-    //runs either isEditMode or student changes
-    //edit mode ma data available huncha meaning prefilled huncha
-    //|| '' ensures that if a field is missing in stuednt, it defaults to an empty string instead of undefined
-    if (isEditMode && student) {
-      setForm({
-        fname: student.fname || "",
-        lname: student.lname || "",
-        email: student.email || "",
-        gender: student.gender || "",
-        phone: student.phone || "",
-        bio: student.bio || "",
-      });
-    }
-  }, [isEditMode, student]);
-
-  const handleChange = (e) => {
-    //e.target.name is the name of the fiels being changed and .value ma new value entered huncha
-    //a new form object is created by copying the old one and updating just one field.
-
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault(); //stops page from reloading on form submit
-    const studentData = {
-      id: isEditMode ? student.id : Date.now(),
-      ...form,
-    };
-    onSubmit(studentData);
-  };
 
   return (
     <Container sx={{ mt: 4, width: "50%", mx: "auto" }}>
       <Typography
         variant="h4"
         gutterBottom
-        sx={{
-          textAlign: "center",
-          color: "#ffffff",
-          backgroundColor: "#1976d2",
-          padding: 1,
-          marginBottom: 3,
-        }}
+        sx={{ textAlign: "center", color: "#fff", backgroundColor: "#1976d2", padding: 1, mb: 3 }}
       >
         {isEditMode ? "Edit Student" : "Create Student"}
       </Typography>
@@ -82,6 +32,7 @@ const genderOptions = ["Male", "Female", "Other"];
         <CardContent>
           <ValidatorForm onSubmit={handleSubmit}>
             <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+              {/* First Name */}
               <TextValidator
                 label="First Name"
                 name="fname"
@@ -93,6 +44,7 @@ const genderOptions = ["Male", "Female", "Other"];
                 size="small"
               />
 
+              {/* Last Name */}
               <TextValidator
                 label="Last Name"
                 name="lname"
@@ -104,6 +56,7 @@ const genderOptions = ["Male", "Female", "Other"];
                 size="small"
               />
 
+              {/* Email */}
               <TextValidator
                 label="Email"
                 name="email"
@@ -115,6 +68,7 @@ const genderOptions = ["Male", "Female", "Other"];
                 size="small"
               />
 
+              {/* Gender */}
               <SelectValidator
                 label="Gender"
                 name="gender"
@@ -126,13 +80,14 @@ const genderOptions = ["Male", "Female", "Other"];
                 size="small"
               >
                 <MenuItem value="">Select Gender</MenuItem>
-                {genderOptions.map((gender) => (
-                  <MenuItem key={gender} value={gender}>
-                    {gender}
+                {genderOptions.map((g) => (
+                  <MenuItem key={g} value={g}>
+                    {g}
                   </MenuItem>
                 ))}
               </SelectValidator>
 
+              {/* Phone */}
               <TextValidator
                 label="Phone"
                 name="phone"
@@ -144,6 +99,7 @@ const genderOptions = ["Male", "Female", "Other"];
                 size="small"
               />
 
+              {/* Bio */}
               <TextValidator
                 label="Bio"
                 name="bio"
@@ -155,14 +111,12 @@ const genderOptions = ["Male", "Female", "Other"];
                 size="small"
               />
 
+              {/* Buttons */}
               <Box sx={{ display: "flex", gap: 2 }}>
                 <Button type="submit" variant="contained">
                   {isEditMode ? "Update" : "Submit"}
                 </Button>
-                <Button
-                  variant="outlined"
-                  onClick={() => window.history.back()}
-                >
+                <Button variant="outlined" onClick={() => window.history.back()}>
                   Cancel
                 </Button>
               </Box>

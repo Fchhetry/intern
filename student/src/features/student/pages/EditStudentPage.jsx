@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import CreateEditStudentFormView from "../viewModules/CreateEditStudentFormView";
-import { updateStudent } from "../../../store/StudentSlice";
+import { updateStudent } from "../../../store/studentSlice";
 
 export default function EditStudentPage() {
   const { id } = useParams(); //Accesses route parameters  here student id
