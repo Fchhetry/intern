@@ -1,25 +1,52 @@
 import React, { useEffect, useState } from 'react';
+import {
+  List,
+  ListItem,
+  ListItemText,
+  ListSubheader,
+  Paper,
+} from '@mui/material';
+import { styled } from '@mui/material/styles';
 
-function Fetch() {
-  const [data, setData] = useState([]); //data is the state variable to hold fetched posts and setData updates the data
+const ScrollablePaper = styled(Paper)(({ theme }) => ({
+  maxHeight: 400,
+  overflow: 'auto',
+  position: 'relative',
+}));
 
-  useEffect(() => { //runs once after the componebt mounts
-    fetch('https://jsonplaceholder.typicode.com/posts') // sends  HTTP GET request to the placeholder API to get a list of posts
-      .then((response) => response.json())              // converts the raw HTTP response to JSON
-      .then((json) => setData(json))                    // Stores the parsed JSON data in the data state using setData
-      .catch((error) => console.error('Error:', error)); // Catches and logs any error if the fetch fails
+export default function Fetch() {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/posts')
+      .then((res) => res.json())
+      .then((json) => setData(json))
+      .catch((err) => console.error('Error:', err));
   }, []);
 
   return (
-    <div>
-    <h2>Posts</h2>
-      <ul>
-        {data.map((item) => ( //loops though every post in data
-          <li key={item.id}>{item.title}</li> // uniquely identify each item in the list
+    <ScrollablePaper>
+      <List
+        subheader={
+          <ListSubheader
+            component="div"
+            sx={{
+              position: 'sticky',
+              top: 0,
+              backgroundColor: (theme) => theme.palette.background.paper,
+              zIndex: 1,
+            }}
+          >
+            Posts
+          </ListSubheader>
+        }
+      >
+        {data.map((item) => (
+          <ListItem key={item.id} divider>
+            <ListItemText primary={item.title} />
+          </ListItem>
         ))}
-      </ul> 
-    </div>
+      </List>
+    </ScrollablePaper>
   );
 }
-
-export default Fetch;

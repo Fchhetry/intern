@@ -19,19 +19,15 @@ export default function DashboardPage() {
 
   const [drawerState, setDrawerState] = useState({ left: false });
   const [featuresAnchorEl, setFeaturesAnchorEl] = useState(null);
-  const isFeaturesMenuOpen = Boolean(featuresAnchorEl);
 
-  const featuresOptions = [
-    { label: 'Fetch', path: '/fetch' },
-    { label: 'Axios', path: '/axios' },
-  ];
+  const isFeaturesMenuOpen = Boolean(featuresAnchorEl);
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (event?.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) return;
     setDrawerState({ ...drawerState, [anchor]: open });
   };
 
-  const handleFeaturesClick = (event) => setFeaturesAnchorEl(event.currentTarget);
+  const handleFeaturesClick = (e) => setFeaturesAnchorEl(e.currentTarget);
   const handleFeaturesClose = () => setFeaturesAnchorEl(null);
 
   const drawerList = () => (
@@ -41,7 +37,7 @@ export default function DashboardPage() {
           <ListItemButton onClick={() => navigate("/")}>
             <ListItemText primary="Home" />
           </ListItemButton>
-          </ListItem>
+        </ListItem>
         <ListItem disablePadding>
           <ListItemButton onClick={() => navigate("/")}>
             <ListItemText primary="Student List" />
@@ -54,9 +50,15 @@ export default function DashboardPage() {
           </ListItemButton>
         </ListItem>
       </List>
-
-      <Menu anchorEl={featuresAnchorEl} open={isFeaturesMenuOpen} onClose={handleFeaturesClose}>
-        {featuresOptions.map((option) => (
+      <Menu
+        anchorEl={featuresAnchorEl}
+        open={isFeaturesMenuOpen}
+        onClose={handleFeaturesClose}
+      >
+        {[
+          { label: 'Fetch', path: '/fetch' },
+          { label: 'Axios', path: '/axios' }
+        ].map((option) => (
           <MenuItem
             key={option.path}
             onClick={() => {
@@ -72,7 +74,10 @@ export default function DashboardPage() {
   );
 
   return (
-    <Container maxWidth="xl" sx={{ mt: 4, mb: 4, backgroundColor: "rgb(221, 226, 232)" }}>
+    <Container
+      maxWidth="xl"
+      sx={{ mt: 4, mb: 4, backgroundColor: "rgb(221, 226, 232)" }}
+    >
       <PrivateLayout onMenuClick={toggleDrawer('left', true)} />
 
       <SwipeableDrawer
@@ -84,9 +89,8 @@ export default function DashboardPage() {
         {drawerList()}
       </SwipeableDrawer>
 
-      {/* This renders the current route inside the Dashboard */}
       <Outlet />
     </Container>
   );
 }
-
+ 

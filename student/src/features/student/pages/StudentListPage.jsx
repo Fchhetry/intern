@@ -15,7 +15,8 @@ import { useNavigate } from "react-router-dom";
 import StudentCard from "../components/StudentCard";
 
 export default function StudentListPage() {
-  const students = useSelector((state) => state.students.list);
+  const students = useSelector((state) => state.students.list || []);
+  const searchQuery = useSelector((state) => state.students.searchQuery || "");
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -25,6 +26,13 @@ export default function StudentListPage() {
 
   const open = Boolean(anchorEl);
   const accountMenuOpen = Boolean(accountAnchorEl);
+
+  const safeSearch = searchQuery.toLowerCase().trim();
+
+  const filteredStudent = students.filter((student) =>
+    `${student.fname} ${student.lname}`.toLowerCase().includes(safeSearch)
+  );
+  const displayList = safeSearch ? filteredStudent : students;
 
   const handleMenuOpen = (event, studentId) => {
     setAnchorEl(event.currentTarget);
@@ -42,28 +50,27 @@ export default function StudentListPage() {
   };
 
   const handleDeleteStudent = (id) => {
-    const confirm = window.confirm(
-      "Are you sure you want to delete this student?"
-    );
-    if (confirm) {
+    if (window.confirm("Are you sure you want to delete this student?")) {
       dispatch(deleteStudent(id));
     }
     handleMenuClose();
   };
 
   return (
-    <Box >
+    <Box>
       <Typography
         variant="h5"
         sx={{
           color: '#1976d2',
           position: 'absolute',
-          left: '50%',                
+          left: '50%',
           transform: 'translateX(-50%)',
           fontWeight: 'bold',
-          }}
-      > Student List
+        }}
+      >
+        Student List
       </Typography>
+
       <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
         <button
           onClick={() => navigate("/create")}
@@ -81,23 +88,21 @@ export default function StudentListPage() {
         </button>
       </Box>
 
-      <Grid container spacing={4} alignItems="stretch"  justifyContent="flex-start" >
-        {students.length > 0 ? (
-          students.map((student) => (
+      <Grid container spacing={4} alignItems="stretch" justifyContent="flex-start">
+        {displayList.length > 0 ? (
+          displayList.map((student) => (
             <Grid item xs={12} sm={6} md={4} key={student.id}>
               <StudentCard
                 student={student}
-                onAvatarClick={(e, id) => {
+                onAvatarClick={(e) => {
                   setAccountAnchorEl(e.currentTarget);
-                  setSelectedStudentId(id);
+                  setSelectedStudentId(student.id);
                 }}
                 accountAnchorEl={accountAnchorEl}
-                accountMenuOpen={
-                  accountMenuOpen && selectedStudentId === student.id
-                }
+                accountMenuOpen={accountMenuOpen && selectedStudentId === student.id}
                 onAccountMenuClose={handleAccountMenuClose}
                 selectedStudentId={selectedStudentId}
-                onMoreMenuClick={handleMenuOpen}
+                onMoreMenuClick={(e) => handleMenuOpen(e, student.id)}
                 sx={{ height: "100%" }}
               />
             </Grid>

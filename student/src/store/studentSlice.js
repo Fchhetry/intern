@@ -17,7 +17,8 @@ const initialState = {
     { id: 13, fname: 'Anish', lname: 'Tamang', email: 'anish@example.com', gender: 'Male', phone: '9845098765' , bio: 'Fascinated by the human mind and behavioral science.I aspire to work in counseling and help people through mental health advocacy.In my free time, I volunteer at wellness workshops and read case studies.' },
     { id: 14, fname: 'Zanele', lname: 'Dlamini', email: 'zanele@example.com', gender: 'Female', phone: '9723456789' , bio: 'Focused on entrepreneurship, marketing, and financial strategies.I am driven by the idea of building businesses that make a real difference.Outside class, I enjoy networking events and pitching ideas in competitions.' },
     { id: 15, fname: 'Diana', lname: 'Marie', email: 'diana@example.com', gender: 'Female', phone: '2223334444' , bio: 'I am a tech enthusiast passionate about building intelligent systems and web applications.I love exploring AI, open-source projects, and learning new frameworks.Currently working on a smart attendance system for my university.' },
-  ]
+  ],
+  searchQuery: '', 
 };
 
 const studentSlice = createSlice({
@@ -36,9 +37,12 @@ const studentSlice = createSlice({
   deleteStudent: (state, action) => {
     state.list = state.list.filter(student => student.id !== action.payload);
   },
+  setSearchQuery: (state, action) => {
+      state.searchQuery = action.payload;
+    },
 }
 });
 
 
-export const { addStudent ,updateStudent, deleteStudent} = studentSlice.actions;
+export const { addStudent ,updateStudent, deleteStudent, setSearchQuery} = studentSlice.actions;
 export default studentSlice.reducer;

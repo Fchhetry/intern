@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   AppBar,
   Toolbar,
@@ -10,12 +10,31 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
+import { useDispatch, useSelector } from "react-redux";
+import { setSearchQuery } from "../store/studentSlice";
 
 export default function PrivateLayout({ onMenuClick }) {
+  const dispatch = useDispatch();
+  const currentQuery = useSelector((state) => state.students.searchQuery);
+  const [searchText, setSearchText] = useState(currentQuery);
+
+  useEffect(() => {
+    setSearchText(currentQuery);
+  }, [currentQuery]);
+
+  const handleSearch = () => {
+    dispatch(setSearchQuery(searchText));
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
+  };
+
   return (
     <AppBar position="static" sx={{ backgroundColor: "#1976d2", mb: 4 }}>
       <Toolbar>
-        {/* Menu Button */}
         <IconButton
           edge="start"
           color="inherit"
@@ -26,7 +45,6 @@ export default function PrivateLayout({ onMenuClick }) {
           <MenuIcon />
         </IconButton>
 
-        {/* Title */}
         <Typography
           variant="h6"
           noWrap
@@ -36,15 +54,12 @@ export default function PrivateLayout({ onMenuClick }) {
           Student Management System
         </Typography>
 
-        {/* Search */}
         <Box
           sx={{
             position: "relative",
             borderRadius: 1,
             backgroundColor: alpha("#ffffff", 0.15),
-            "&:hover": {
-              backgroundColor: alpha("#ffffff", 0.25),
-            },
+            "&:hover": { backgroundColor: alpha("#ffffff", 0.25) },
             marginLeft: 0,
             width: "100%",
             maxWidth: 300,
@@ -55,11 +70,13 @@ export default function PrivateLayout({ onMenuClick }) {
               padding: "0px 10px",
               height: "100%",
               position: "absolute",
-              pointerEvents: "none",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
+              cursor: "pointer",
+              zIndex: 1,
             }}
+            onClick={handleSearch}
           >
             <SearchIcon />
           </Box>
@@ -71,6 +88,9 @@ export default function PrivateLayout({ onMenuClick }) {
               paddingLeft: 4,
               width: "100%",
             }}
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+            onKeyDown={handleKeyDown}
           />
         </Box>
       </Toolbar>
