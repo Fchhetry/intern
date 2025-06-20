@@ -6,7 +6,7 @@ import {
   Menu,
   MenuItem,
   ListItemIcon,
-  
+  Pagination,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -15,7 +15,7 @@ import { useStudentListHooks } from "../../../hooks/hook1";
 
 export default function StudentListPage() {
   const {
-    
+    paginatedList,
     displayList,
     anchorEl,
     open,
@@ -28,6 +28,9 @@ export default function StudentListPage() {
     handleDeleteStudent,
     handleAdd,
     handleEdit,
+    page, 
+    totalPages,
+    handlePageChange,
   } = useStudentListHooks();
 
   return (
@@ -63,8 +66,9 @@ export default function StudentListPage() {
       </Box>
 
       <Grid container spacing={4} alignItems="stretch" justifyContent="center">
-        {displayList.length > 0 ? (
-          displayList.map((student) => (
+
+         {paginatedList.length > 0 ? (
+          paginatedList.map((student) => ( 
             <Grid item xs={12} sm={6} md={4} key={student.id}>
               <StudentCard
                 student={student}
@@ -90,6 +94,17 @@ export default function StudentListPage() {
         )}
       </Grid>
 
+      {totalPages > 1 && (
+        <Box mt={4} display="flex" justifyContent="center">
+          <Pagination
+            count={totalPages}
+            page={page}
+            onChange={handlePageChange}
+            color="primary"
+          />
+        </Box>
+      )}
+
       <Menu
         anchorEl={anchorEl}
         open={open}
@@ -110,6 +125,7 @@ export default function StudentListPage() {
         </MenuItem>
       </Menu>
     </Box>
+  
   );
 }
 

@@ -23,6 +23,18 @@ export function useStudentListHooks() {
   const open = Boolean(anchorEl);
   const accountMenuOpen = Boolean(accountAnchorEl);
 
+  const [page, setPage] = useState(1);
+  const studentsPerPage = 6;
+  const totalPages = Math.ceil(displayList.length / studentsPerPage);
+
+  const startIndex = (page - 1) * studentsPerPage;
+  const endIndex = startIndex + studentsPerPage;
+  const paginatedList = displayList.slice(startIndex, endIndex);
+
+  const handlePageChange = (event, value) => {
+    setPage(value);
+  };
+
   const handleMenuOpen = (event, studentId) => {
     setAnchorEl(event.currentTarget);
     setSelectedStudentId(studentId);
@@ -53,6 +65,7 @@ export function useStudentListHooks() {
 
   return {
     displayList,
+    paginatedList,
     anchorEl,
     open,
     accountAnchorEl,
@@ -64,9 +77,11 @@ export function useStudentListHooks() {
     handleDeleteStudent,
     handleAdd,
     handleEdit,
+    page,
+    totalPages,
+    handlePageChange,
   };
 } 
-
 
 export function useStudentForm({ isEditMode, student, onSubmit }) {
   const [form, setForm] = useState({
