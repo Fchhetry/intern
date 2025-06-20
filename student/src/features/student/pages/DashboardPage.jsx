@@ -7,6 +7,7 @@ import {
   ListItemButton,
   ListItemText,
   SwipeableDrawer,
+  Typography,
   Menu,
   MenuItem
 } from '@mui/material';
@@ -16,6 +17,10 @@ import PrivateLayout from '../../../layouts/PrivateLayout';
 
 export default function DashboardPage() {
   const navigate = useNavigate();
+  // const handleLogout = () => {
+  //   localStorage.removeItem("isAuthenticated");
+  //   navigate("/login");
+  // };
 
   const [drawerState, setDrawerState] = useState({ left: false });
   const [featuresAnchorEl, setFeaturesAnchorEl] = useState(null);
@@ -39,7 +44,7 @@ export default function DashboardPage() {
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton onClick={() => navigate("/")}>
+          <ListItemButton onClick={() => navigate("/dashboard/studentlist")}>
             <ListItemText primary="Student List" />
           </ListItemButton>
         </ListItem>
@@ -56,8 +61,8 @@ export default function DashboardPage() {
         onClose={handleFeaturesClose}
       >
         {[
-          { label: 'Fetch', path: '/fetch' },
-          { label: 'Axios', path: '/axios' }
+          { label: 'Fetch', path: '/dashboard/fetch' },
+          { label: 'Axios', path: '/dashboard/axios' }
         ].map((option) => (
           <MenuItem
             key={option.path}
@@ -88,9 +93,7 @@ export default function DashboardPage() {
       >
         {drawerList()}
       </SwipeableDrawer>
-
       <Outlet />
     </Container>
   );
 }
- 

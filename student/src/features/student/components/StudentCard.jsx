@@ -50,8 +50,6 @@ export default function StudentCard({
         ...props?.sx,
       }}
     >
-
-      <Box onClick={() => navigate(`/view/${student.id}`)}>
         <CardHeader
           avatar={
             <Tooltip title="Click for details">
@@ -68,14 +66,23 @@ export default function StudentCard({
             </Tooltip>
           }
           title={
-            <Typography variant="h6">
+            <Typography 
+            variant="h6"
+            onClick={() => navigate(`/view/${student.id}`)}
+            sx={{ cursor: "pointer" }}
+            >
               {student.fname && student.lname
                 ? `${student.fname} ${student.lname}`
                 : student.name || "Unnamed"}
             </Typography>
           }
           subheader={
-            <Typography variant="body2" color="text.secondary">
+            <Typography 
+            variant="body2" 
+            color="text.secondary"
+            sx={{ cursor: "pointer" }}
+            onClick={() => navigate(`/view/${student.id}`)}
+            >
               {student.email}
             </Typography>
           }
@@ -120,7 +127,13 @@ export default function StudentCard({
           anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
         >
           {menuItems.map((item, index) => (
-            <MenuItem key={index} onClick={item.action}>
+            <MenuItem 
+            key={index} 
+            onClick={(e)=>{
+            e.stopPropagation();
+            item.action();
+            }}
+            >
               <ListItemIcon>{item.icon}</ListItemIcon>
               <Typography variant="inherit">{item.label}</Typography>
             </MenuItem>
@@ -151,14 +164,15 @@ export default function StudentCard({
                   mt: 1,
                   display: "inline-block",
                 }}
-                onClick={toggleBio}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleBio();
+                }}
               >
                 {bioExpanded ? "Show Less" : "Show More"}
-              </Typography>
-            
+              </Typography> 
           </Box>
         </CardContent>
-      </Box>
     </Card>
   );
 }

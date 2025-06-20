@@ -1,18 +1,11 @@
 import React from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import {
-  Container,
-  Typography,
-  Box,
-  Button,
-  Card,
-  CardContent,
-} from '@mui/material';
+import { Container, Typography } from '@mui/material';
+import ViewStudentCard from '../components/ViewStudentCard';
 
 export default function ViewStudentFormPage() {
   const { id } = useParams();
-  const navigate = useNavigate();
   const student = useSelector((state) =>
     state.students.list.find((s) => s.id === parseInt(id))
   );
@@ -26,25 +19,8 @@ export default function ViewStudentFormPage() {
   }
 
   return (
-    <Container sx={{ mt: 4, width: '100%' }} maxWidth="sm" >
-      <Card sx={{ p: 2 ,backgroundColor: '#e3f2fd'  }}>
-        <CardContent>
-          <Typography variant="h4" gutterBottom>
-            Name: {student.fname && student.lname
-              ? `${student.fname} ${student.lname}`
-              : student.name || 'Unnamed'}
-          </Typography>
-          <Typography>Email: {student.email}</Typography>
-          <Typography>Phone: {student.phone}</Typography>
-          <Typography>Gender: {student.gender}</Typography>
-          <Typography>Bio: {student.bio}</Typography>
-        </CardContent>
-        <Box mt={1}>
-          <Button variant="contained"  onClick={() => navigate(-1) }>
-            Back
-          </Button>
-        </Box>
-      </Card>
+    <Container sx={{ mt: 4, width: '100%' }} maxWidth="sm">
+      <ViewStudentCard student={student} />
     </Container>
   );
 }
