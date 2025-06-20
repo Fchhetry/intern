@@ -1,41 +1,67 @@
-// LoginPage.jsx
-import React, { useEffect } from "react";
+import React from "react";
+import {
+  Container,
+  Typography,
+  TextField,
+  Button,
+  Box,
+  Link,
+  Paper
+} from "@mui/material";
+import { useLogin } from "../../../hooks/hook1";
 import { useNavigate } from "react-router-dom";
-import { Button, Typography, Box, TextField } from "@mui/material";
 
 export default function LoginPage() {
+  const { loginData, errors, handleChange, handleLogin } = useLogin();
   const navigate = useNavigate();
 
-  // If already logged in, redirect to dashboard
-  useEffect(() => {
-    const isAuthenticated = localStorage.getItem("isAuthenticated");
-    if (isAuthenticated === "true") {
-      navigate("/dashboard");
-    }
-  }, [navigate]);
-
-  const handleLogin = () => {
-    // In real case, add validation here
-    localStorage.setItem("isAuthenticated", "true");
-    navigate("/dashboard");
-  };
-
   return (
-    <Box sx={{ width: 300, mx: "auto", mt: 10 }}>
-      <Typography variant="h5" gutterBottom>
-        Login
-      </Typography>
-      <TextField fullWidth label="Email" margin="normal" />
-      <TextField fullWidth label="Password" type="password" margin="normal" />
-      <Button
-        fullWidth
-        variant="contained"
-        color="primary"
-        sx={{ mt: 2 }}
-        onClick={handleLogin}
-      >
-        Login
-      </Button>
-    </Box>
+    <Container maxWidth="sm" sx={{ mt: 8 }}>
+      <Paper elevation={3} sx={{ p: 4, borderRadius: 3 }}>
+        <Typography variant="h4" gutterBottom align="center" color="primary">
+          Login
+        </Typography>
+        <Box
+          component="form"
+          onSubmit={handleLogin}
+          sx={{ display: "flex", flexDirection: "column", gap: 3 }}
+        >
+          <TextField
+            label="Email"
+            name="email"
+            fullWidth
+            required
+            value={loginData.email}
+            onChange={handleChange}
+            error={!!errors.email}
+            helperText={errors.email}
+          />
+          <TextField
+            label="Password"
+            name="password"
+            type="password"
+            fullWidth
+            required
+            value={loginData.password}
+            onChange={handleChange}
+            error={!!errors.password}
+            helperText={errors.password}
+          />
+          <Button type="submit" variant="contained" fullWidth size="large">
+            Login
+          </Button>
+          <Typography variant="body2" align="center">
+            Don't have an account?{" "}
+            <Link
+              onClick={() => navigate("/signup")}
+              underline="hover"
+              sx={{ cursor: "pointer" }}
+            >
+              Sign up
+            </Link>
+          </Typography>
+        </Box>
+      </Paper>
+    </Container>
   );
 }

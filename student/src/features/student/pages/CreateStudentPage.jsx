@@ -15,7 +15,7 @@ export default function CreateStudentPage() {
     };
 
     dispatch(addStudent(newStudent)); //ends the student to the Redux store
-    navigate("/"); //Takes the user back to the homepage
+    navigate("/dashboard/studentlist"); //Takes the user back to the homepage
   };
 
   return (

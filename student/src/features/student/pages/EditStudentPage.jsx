@@ -17,7 +17,7 @@ export default function EditStudentPage() {
 
   const handleSubmit = (updatedStudent) => {
     dispatch(updateStudent({ ...updatedStudent, id: Number(id) }));
-    navigate("/");
+    navigate("/dashboard/studentlist");
   };
 
   if (!student) {

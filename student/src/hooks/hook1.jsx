@@ -57,9 +57,9 @@ export function useStudentListHooks() {
     handleMenuClose();
   };
 
-  const handleAdd = () => navigate("/create");
+  const handleAdd = () => navigate("/dashboard/create");
   const handleEdit = () => {
-    if (selectedStudentId) navigate(`/edit/${selectedStudentId}`);
+    if (selectedStudentId) navigate(`/dashboard/edit/${selectedStudentId}`);
     handleMenuClose();
   };
 
@@ -129,3 +129,106 @@ export function useStudentForm({ isEditMode, student, onSubmit }) {
     handleSubmit,
   };
 }
+
+export function useLogin() {
+  const [loginData, setLoginData] = useState({ 
+    email: "", 
+    password: "" 
+  });
+
+  const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
+
+  const validate = () => {
+    const newErrors = {};
+    if (!loginData.email) newErrors.email = "Email is required";
+    if (!loginData.password) newErrors.password = "Password is required";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setLoginData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    if (!validate()) return;
+
+  const savedUserStr = localStorage.getItem("authUser");
+    if (!savedUserStr) {
+      setErrors({ email: "No user found. Please sign up first." });
+      return;
+    }
+    const savedUser = JSON.parse(savedUserStr);
+
+    if (
+      loginData.email === savedUser.email &&
+      loginData.password === savedUser.password
+    ) {
+      
+      localStorage.setItem("isAuthenticated", "true");
+      navigate("/dashboard");
+    } else {
+      setErrors({ email: "Invalid email or password" });
+    }
+  };
+
+  return { 
+    loginData, 
+    errors, 
+    handleChange, 
+    handleLogin 
+  };
+}
+
+  
+export function useSignup() {
+  const [signupData, setSignupData] = useState({
+    email: "",
+    password: "",
+    confirmPassword: ""
+  });
+  const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
+
+  const validate = () => {
+    const newErrors = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(signupData.email)) {
+      newErrors.email = "Invalid email format";
+    }
+    if (!signupData.password) {
+      newErrors.password = "Password is required";
+    } else if (signupData.password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters";
+    }
+    if (signupData.password !== signupData.confirmPassword) {
+      newErrors.confirmPassword = "Passwords do not match";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setSignupData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSignup = (e) => {
+    e.preventDefault();
+    if (!validate()) return;
+
+    localStorage.setItem("authUser", JSON.stringify({
+      email: signupData.email,
+      password: signupData.password,
+    }));
+    navigate("/");
+  };
+
+  return { signupData, errors, handleChange, handleSignup };
+}
+

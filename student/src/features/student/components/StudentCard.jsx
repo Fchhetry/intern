@@ -81,7 +81,7 @@ export default function StudentCard({
             variant="body2" 
             color="text.secondary"
             sx={{ cursor: "pointer" }}
-            onClick={() => navigate(`/view/${student.id}`)}
+            onClick={() => navigate(`/dashboard/view/${student.id}`)}
             >
               {student.email}
             </Typography>
