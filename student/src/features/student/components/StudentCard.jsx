@@ -31,22 +31,24 @@ export default function StudentCard({
   const toggleBio = () => setBioExpanded((prev) => !prev);
 
   return (
-    <Card
+    <Card 
       {...props}
       sx={{
-        backgroundColor: "#f5f5f5",
-        transition: "0.3s",
-        height: "300",
+        width: 300,
+        height: 260,
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        "&:hover": {
-          backgroundColor: "#e3f2fd",
-          boxShadow: 6,
+        backgroundColor: "#f5f5f5",
+        transition: "0.3s",
+       "&:hover": {
+        backgroundColor: "#e3f2fd",
+        boxShadow: 6,
         },
         ...props?.sx,
       }}
     >
+
       <Box onClick={() => navigate(`/view/${student.id}`)}>
         <CardHeader
           avatar={
@@ -92,7 +94,8 @@ export default function StudentCard({
           id={`account-menu-${student.id}`}
           open={accountMenuOpen && selectedStudentId === student.id}
           onClose={onAccountMenuClose}
-          PaperProps={{
+          slotProps={{
+            paper:{
             elevation: 3,
             sx: {
               mt: 1.5,
@@ -110,6 +113,7 @@ export default function StudentCard({
                 zIndex: 0,
               },
             },
+          },
           }}
           transformOrigin={{ horizontal: "left", vertical: "top" }}
           anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
@@ -128,15 +132,19 @@ export default function StudentCard({
         <CardContent>
           <Divider sx={{ mb: 1 }} />
           <Box>
-            <Typography variant="body2" sx={{ color: "text.secondary" }}>
-              <strong>Bio:</strong>{" "}
-              {bioExpanded
-                ? student.bio
-                : student.bio?.split(" ").slice(0, 5).join(" ") +
-                  (student.bio?.split(" ").length > 5 ? "..." : "")}
+            <Typography variant="body2" 
+              sx={{ 
+                color: "text.secondary",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                display: "-webkit-box",
+                WebkitLineClamp: bioExpanded ? 'unset' : 2,
+                WebkitBoxOrient: "vertical",
+              }}
+            >
+              <strong>Bio:</strong> {student.bio}
             </Typography>
 
-            {student.bio && student.bio.split(" ").length > 5 && (
               <Typography
                 variant="caption"
                 sx={{
@@ -149,7 +157,7 @@ export default function StudentCard({
               >
                 {bioExpanded ? "Show Less" : "Show More"}
               </Typography>
-            )}
+            
           </Box>
         </CardContent>
       </Box>

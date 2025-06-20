@@ -6,6 +6,7 @@ import {
   Menu,
   MenuItem,
   ListItemIcon,
+  
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -14,6 +15,7 @@ import { useStudentListHooks } from "../../../hooks/hook1";
 
 export default function StudentListPage() {
   const {
+    
     displayList,
     anchorEl,
     open,
@@ -60,7 +62,7 @@ export default function StudentListPage() {
         </button>
       </Box>
 
-      <Grid container spacing={4} alignItems="stretch" justifyContent="flex-start">
+      <Grid container spacing={4} alignItems="stretch" justifyContent="center">
         {displayList.length > 0 ? (
           displayList.map((student) => (
             <Grid item xs={12} sm={6} md={4} key={student.id}>
@@ -110,3 +112,4 @@ export default function StudentListPage() {
     </Box>
   );
 }
+
