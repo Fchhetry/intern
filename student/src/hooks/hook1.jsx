@@ -36,12 +36,12 @@ export function useStudentListHooks() {
   };
 
   const handleMenuOpen = (event, studentId) => {
-    setAnchorEl(event.currentTarget);
+    setAccountAnchorEl(event.currentTarget);
     setSelectedStudentId(studentId);
   };
 
   const handleMenuClose = () => {
-    setAnchorEl(null);
+    setAccountAnchorEl(null);
     setSelectedStudentId(null);
   };
 

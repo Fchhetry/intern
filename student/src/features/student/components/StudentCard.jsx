@@ -11,6 +11,7 @@ import {
   Menu,
   MenuItem,
   Divider,
+  ListItemIcon, 
 } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useNavigate } from "react-router-dom";
@@ -23,6 +24,7 @@ export default function StudentCard({
   onAccountMenuClose,
   selectedStudentId,
   onMoreMenuClick,
+  menuItems,
   ...props
 }) {
   const navigate = useNavigate();
@@ -91,44 +93,40 @@ export default function StudentCard({
 
         <Menu
           anchorEl={accountAnchorEl}
-          id={`account-menu-${student.id}`}
           open={accountMenuOpen && selectedStudentId === student.id}
           onClose={onAccountMenuClose}
           slotProps={{
-            paper:{
-            elevation: 3,
-            sx: {
-              mt: 1.5,
-              overflow: "visible",
-              "&:before": {
-                content: '""',
-                display: "block",
-                position: "absolute",
-                top: 0,
-                left: 20,
-                width: 10,
-                height: 10,
-                bgcolor: "background.paper",
-                transform: "translateY(-50%) rotate(45deg)",
-                zIndex: 0,
+            paper: {
+              elevation: 3,
+              sx: {
+                mt: 1.5,
+                overflow: "visible",
+                "&:before": {
+                  content: '""',
+                  display: "block",
+                  position: "absolute",
+                  top: 0,
+                  left: 20,
+                  width: 10,
+                  height: 10,
+                  bgcolor: "background.paper",
+                  transform: "translateY(-50%) rotate(45deg)",
+                  zIndex: 0,
+                },
               },
             },
-          },
           }}
           transformOrigin={{ horizontal: "left", vertical: "top" }}
           anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
         >
-          <MenuItem disabled>
-            <Typography variant="body2">
-              <strong>Gender:</strong> {student.gender}
-            </Typography>
-          </MenuItem>
-          <MenuItem disabled>
-            <Typography variant="body2">
-              <strong>Phone:</strong> {student.phone}
-            </Typography>
-          </MenuItem>
+          {menuItems.map((item, index) => (
+            <MenuItem key={index} onClick={item.action}>
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <Typography variant="inherit">{item.label}</Typography>
+            </MenuItem>
+          ))}
         </Menu>
+
         <CardContent>
           <Divider sx={{ mb: 1 }} />
           <Box>

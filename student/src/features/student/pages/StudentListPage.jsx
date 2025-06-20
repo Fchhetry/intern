@@ -3,9 +3,6 @@ import {
   Typography,
   Grid,
   Box,
-  Menu,
-  MenuItem,
-  ListItemIcon,
   Pagination,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
@@ -16,14 +13,10 @@ import { useStudentListHooks } from "../../../hooks/hook1";
 export default function StudentListPage() {
   const {
     paginatedList,
-    displayList,
-    anchorEl,
-    open,
     accountAnchorEl,
     accountMenuOpen,
     selectedStudentId,
     handleMenuOpen,
-    handleMenuClose,
     handleAccountMenuClose,
     handleDeleteStudent,
     handleAdd,
@@ -31,7 +24,21 @@ export default function StudentListPage() {
     page, 
     totalPages,
     handlePageChange,
+    
   } = useStudentListHooks();
+  
+  const studentMenuItems = [
+      {
+        label: "Edit",
+        icon: <EditIcon fontSize="small" sx={{ color: "#1976d2" }} />,
+        action: handleEdit,
+      },
+      {
+        label: "Delete",
+        icon: <DeleteIcon fontSize="small" sx={{ color: "#d32f2f" }} />,
+        action: () => handleDeleteStudent(selectedStudentId),
+      },
+    ];
 
   return (
     <Box>
@@ -81,6 +88,7 @@ export default function StudentListPage() {
                 onAccountMenuClose={handleAccountMenuClose}
                 selectedStudentId={selectedStudentId}
                 onMoreMenuClick={(e) => handleMenuOpen(e, student.id)}
+                menuItems={studentMenuItems}
                 sx={{ height: "100%" }}
               />
             </Grid>
@@ -104,26 +112,6 @@ export default function StudentListPage() {
           />
         </Box>
       )}
-
-      <Menu
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleMenuClose}
-        PaperProps={{ sx: { maxHeight: 200, width: "200px" } }}
-      >
-        <MenuItem onClick={handleEdit}>
-          <ListItemIcon>
-            <EditIcon fontSize="small" sx={{ color: "#1976d2" }} />
-          </ListItemIcon>
-          Edit
-        </MenuItem>
-        <MenuItem onClick={() => handleDeleteStudent(selectedStudentId)}>
-          <ListItemIcon>
-            <DeleteIcon fontSize="small" sx={{ color: "#d32f2f" }} />
-          </ListItemIcon>
-          Delete
-        </MenuItem>
-      </Menu>
     </Box>
   
   );
