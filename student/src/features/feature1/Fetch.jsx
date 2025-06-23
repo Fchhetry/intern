@@ -43,7 +43,7 @@ export default function Fetch() {
     cacheTime: 300000,
   });
 
-  // 📝 Posts Query running in parallel
+  //Posts Query running in parallel
   const {
     data: posts,
     isLoading: loadingPosts,
