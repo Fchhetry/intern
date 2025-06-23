@@ -7,7 +7,6 @@ import {
   ListItemButton,
   ListItemText,
   SwipeableDrawer,
-  Typography,
   Menu,
   MenuItem
 } from '@mui/material';
@@ -17,10 +16,10 @@ import PrivateLayout from '../../../layouts/PrivateLayout';
 
 export default function DashboardPage() {
   const navigate = useNavigate();
-  // const handleLogout = () => {
-  //   localStorage.removeItem("isAuthenticated");
-  //   navigate("/login");
-  // };
+  const handleLogout = () => {
+    localStorage.removeItem("isAuthenticated");
+    navigate("/login", { state: { message: "You have successfully logged out." } });
+  };
 
   const [drawerState, setDrawerState] = useState({ left: false });
   const [featuresAnchorEl, setFeaturesAnchorEl] = useState(null);

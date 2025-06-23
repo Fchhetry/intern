@@ -229,6 +229,11 @@ export function useSignup() {
     navigate("/");
   };
 
-  return { signupData, errors, handleChange, handleSignup };
+  return { 
+    signupData, 
+    errors, 
+    handleChange, 
+    handleSignup 
+  };
 }
 

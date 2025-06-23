@@ -68,7 +68,7 @@ export default function StudentCard({
           title={
             <Typography 
             variant="h6"
-            onClick={() => navigate(`/view/${student.id}`)}
+            onClick={() => navigate(`/dashboard/view/${student.id}`)}
             sx={{ cursor: "pointer" }}
             >
               {student.fname && student.lname

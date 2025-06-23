@@ -7,7 +7,6 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from './store/store';
 import theme from './theme';
 import AppRoutes from './routes';
-
 function App() {
   return (
     <Provider store={store}>
