@@ -19,7 +19,7 @@ const fetchUsers = async () => {
   return res.json();
 };
 
-const fetchPosts = async () => {
+const fetchPosts = async () => {  //Fetch data from JSONPlaceholder
   const res = await fetch("https://jsonplaceholder.typicode.com/posts");
   if (!res.ok) throw new Error("Failed to fetch posts");
   return res.json();
@@ -53,9 +53,9 @@ export default function Fetch() {
   } = useQuery({
     queryKey: ["posts"],
     queryFn: fetchPosts,
-    refetchOnWindowFocus: true,
-    staleTime: 60000,
-    cacheTime: 300000,
+    refetchOnWindowFocus: true,//window refetching
+    staleTime: 60000, //autocaching
+    cacheTime: 300000,//autocaching
   });
 
   // Handle loading and error states
