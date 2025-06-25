@@ -1,12 +1,12 @@
 // Basic object type
-export interface Address {
+export interface Address { //defines an object type named Address
   street: string;
   city: string;
   zipCode: string;
 }
 
 // Nested object type
-export interface UserProfile {
+export interface UserProfile {//Includes a nested object: address, which must match the structure of the Address interface defined above
   id: number;
   name: string;
   email: string;

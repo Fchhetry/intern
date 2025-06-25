@@ -42,11 +42,10 @@ import {
   Notification, 
   FormValue } from "./typescript/uniontypes";
   import {
-    Address,
     UserProfile,
     Product} from "./typescript/objecttypes";
 
-interface Student {
+interface Student { //student interface to use with pagination and API response types
   id: number;
   fname: string;
   lname: string;
@@ -55,7 +54,7 @@ interface Student {
 
 function App() {
   //use Pagination<Student> type for state
-   const [pagination, setPagination] = useState<Pagination<Student>>({
+   const [pagination, setPagination] = useState<Pagination<Student>>({ //holds student list + pagination info like currentPage, totalPages, etc
     items: [
       { id: 1, fname: "Pooja", lname: "Fuyal", email: "pooja@example.com" },
       { id: 2, fname: "Shreya", lname: "Pokhrel", email: "shreya@example.com"  },
@@ -68,8 +67,8 @@ function App() {
 
   // use ModalProps for a modal state
   const [modal, setModal] = useState<ModalProps>({
-    isOpen: false,
-    onClose: () => setModal(prev => ({ ...prev, isOpen: false })),
+    isOpen: false, //modal state. isOpen controls visibility
+    onClose: () => setModal(prev => ({ ...prev, isOpen: false })),//onClose toggles isOpen to false
     title: "Example Modal",
   });
 
@@ -78,10 +77,9 @@ function App() {
   const [inputText, setInputText] = useState("");
   const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.ASC);
    const [sortedArray, setSortedArray] = useState<string[]>([]);
-
    const handleSort = () => {
-    const array = inputText.split(",").map((item) => item.trim());
-    const sorted = [...array].sort();
+  const array = inputText.split(",").map((item) => item.trim());
+  const sorted = [...array].sort();
 
     if (sortOrder === SortOrder.DESC) {
       sorted.reverse();
@@ -98,13 +96,13 @@ function App() {
 
    // API response state (simulate fetching students)
   const [apiResponse, setApiResponse] = useState<ApiResponse<Student[]>>({
-    data: [],
+    data: [], //ApiResponse<T> holds simulated fetched data
     status: 0,
   });
 
   // Simulate fetching data with AsyncState
   const [fetchState, setFetchState] = useState<AsyncState<Student[]>>({
-    loading: false,
+    loading: false, //AsyncState<T> helps simulate loading state
   });
 
   const [value, setValue] = useState<StringOrNumber>("Hello");
@@ -156,7 +154,7 @@ function App() {
   });
 
    // Product list state
-  const [products, setProducts] = useState<Product[]>([
+  const [products] = useState<Product[]>([
     { id: 1, name: "Laptop", price: 1200 },
     { id: 2, name: "Mouse", price: 20, description: "Wireless mouse" },
   ]);
