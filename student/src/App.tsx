@@ -34,6 +34,13 @@ import {
   ModalProps,
   SortOrder,
   SelectOption,
+  Address,
+  UserProfile,
+  Person,
+  Employee,
+  Product,
+  Dictionary,
+  MathOperation,
 } from "./typescript/interfacetypes";
 import { Card } from "@mui/material";
 import { 
@@ -42,8 +49,8 @@ import {
   Notification, 
   FormValue } from "./typescript/uniontypes";
   import {
-    UserProfile,
-    Product} from "./typescript/objecttypes";
+  UseProfile,
+  Prod} from "./typescript/objecttypes";
 
 interface Student { //student interface to use with pagination and API response types
   id: number;
@@ -141,8 +148,8 @@ function App() {
     }
   };
 
-  // UserProfile state
-  const [user, setUser] = useState<UserProfile>({
+  // UserProfile state, nested interface
+  const [user, setUser] = useState<UseProfile>({
     id: 1,
     name: "Pooja Fuyal",
     email: "pooja@example.com",
@@ -154,7 +161,7 @@ function App() {
   });
 
    // Product list state
-  const [products] = useState<Product[]>([
+  const [products] = useState<Prod[]>([
     { id: 1, name: "Laptop", price: 1200 },
     { id: 2, name: "Mouse", price: 20, description: "Wireless mouse" },
   ]);
@@ -195,6 +202,35 @@ function App() {
       touched: true,
     });
   };
+
+
+   // Extending Interfaces: Employee extends Person
+  const employee: Employee = {
+    name: "Shreya Pokhrel",
+    age: 25,
+    employeeId: 1001,
+    department: "Engineering",
+  };
+
+  // Readonly interface: Product
+  const product: Product = {
+    id: 1,
+    name: "Laptop",
+    price: 1500,
+    description: "High-performance laptop",
+  };
+
+  // Index Signature: Dictionary
+  const colors: Dictionary = {
+    primary: "#000000",
+    secondary: "#ffffff",
+    accent: "#ff5733",
+  };
+
+  // Function Interface: MathOperation
+  const add: MathOperation = (a, b) => a + b;
+  const result = add(10, 5);
+
   return (
     <div>
       <h1>React + Redux + TypeScript + Vite</h1>
@@ -237,6 +273,54 @@ function App() {
         </div>
       )}
       </div>
+<div style={{ padding: 20 }}>
+      <h1>Advanced Interface Types in TypeScript</h1>
+
+      {/* Nested Interface */}
+      <Card style={{ padding: 10, marginBottom: 20 }}>
+        <h2>User Profile</h2>
+        <p><strong>Name:</strong> {user.name}</p>
+        <p><strong>Email:</strong> {user.email}</p>
+        <p><strong>Address:</strong> {user.address.street}, {user.address.city}, {user.address.zipCode}</p>
+        <button onClick={updateUserCity}>Change City to Pokhara</button>
+      </Card>
+
+      {/* Extended Interface */}
+      <Card style={{ padding: 10, marginBottom: 20 }}>
+        <h2>Employee (Extended from Person)</h2>
+        <p><strong>Name:</strong> {employee.name}</p>
+        <p><strong>Age:</strong> {employee.age}</p>
+        <p><strong>Employee ID:</strong> {employee.employeeId}</p>
+        <p><strong>Department:</strong> {employee.department}</p>
+      </Card>
+
+      {/* Readonly Interface */}
+      <Card style={{ padding: 10, marginBottom: 20 }}>
+        <h2>Product (Readonly ID)</h2>
+        <p><strong>Product Name:</strong> {product.name}</p>
+        <p><strong>Price:</strong> ${product.price}</p>
+        <p><strong>Description:</strong> {product.description}</p>
+      </Card>
+
+      {/* Index Signature */}
+      <Card style={{ padding: 10, marginBottom: 20 }}>
+        <h2>Colors (Dictionary)</h2>
+        <ul>
+          {Object.entries(colors).map(([key, value]) => (
+            <li key={key}>
+              <strong>{key}:</strong> {value}
+            </li>
+          ))}
+        </ul>
+      </Card>
+
+      {/* Function Interface */}
+      <Card style={{ padding: 10, marginBottom: 20 }}>
+        <h2>Math Operation</h2>
+        <p><strong>10 + 5 = {result}</strong></p>
+      </Card>
+    </div>
+
       </Card>
       <br></br>
 

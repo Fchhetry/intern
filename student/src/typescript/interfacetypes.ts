@@ -44,49 +44,49 @@ export interface SelectOption<T = string | number> { //defines options for a dro
   value: T; //value behind the option
   disabled?: boolean; //this option is disabled
 }
-// //nested interfaces
-// export interface Address {
-//   street: string;
-//   city: string;
-//   zipCode: string;
-// }
+//nested interfaces
+export interface Address {
+  street: string;
+  city: string;
+  zipCode: string;
+}
 
-// export interface UserProfile {
-//   id: number;
-//   name: string;
-//   email: string;
-//   address: Address; // nested interface
-// }
-// //extending interfaces
-// export interface Person {
-//   name: string;
-//   age: number;
-// }
+export interface UserProfile {
+  id: number;
+  name: string;
+  email: string;
+  address: Address; // nested interface
+}
+//extending interfaces
+export interface Person {
+  name: string;
+  age: number;
+}
 
-// export interface Employee extends Person {
-//   employeeId: number;
-//   department: string;
-// }
-// //readonly properties
-// export interface Product {
-//   readonly id: number;
-//   name: string;
-//   price: number;
-//   description?: string;
-// }
-// //index signature
-// export interface Dictionary {
-//   [key: string]: string;
-// }
+export interface Employee extends Person {
+  employeeId: number;
+  department: string;
+}
+//readonly properties
+export interface Product {
+  readonly id: number;
+  name: string;
+  price: number;
+  description?: string;
+}
+//index signature
+export interface Dictionary {
+  [key: string]: string;
+}
 
-// const colors: Dictionary = {
-//   primary: "#000",
-//   secondary: "#FFF",
-// };
+const colors: Dictionary = {
+  primary: "#000",
+  secondary: "#FFF",
+};
 
-// //function interface
-// export interface MathOperation {
-//   (a: number, b: number): number;
-// }
+//function interface
+export interface MathOperation {
+  (a: number, b: number): number;
+}
 
-// const add: MathOperation = (a, b) => a + b;
+const add: MathOperation = (a, b) => a + b;
